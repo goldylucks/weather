@@ -1,0 +1,92 @@
+[
+  {
+    "id": "ChIJXSModoWLGGARILWiCfeu2M0",
+    "name": "Tokyo, Japan",
+    "lat": "35.668477",
+    "lng": "139.4606643"
+  },
+  {
+    "id": "ChIJL_P_CXMEDTkRw0ZdG-0GVvw",
+    "name": "Delhi, India",
+    "lat": "28.6927189",
+    "lng": "76.8111426"
+  },
+  {
+    "id": "ChIJMzz1sUBwsjURoWTDI5QSlQI",
+    "name": "Shanghai, China",
+    "lat": "31.2243083",
+    "lng": "120.9162305"
+  },
+  {
+    "id": "ChIJ0WGkg4FEzpQRrlsz_whLqZs",
+    "name": "Sao Paulo, Brazil",
+    "lat": "-22.4733994",
+    "lng": "-53.1350898"
+  },
+  {
+    "id": "ChIJB3UJ2yYAzoURQeheJnYQBlQ",
+    "name": "Mexico City, Mexico",
+    "lat": "19.320931",
+    "lng": "-99.4328248"
+  },
+  {
+    "id": "ChIJgWsCh7C4VTcRwgRZ3btjpY8",
+    "name": "Dhaka, Bangladesh",
+    "lat": "23.7808875",
+    "lng": "90.2792356"
+  },
+  {
+    "id": "ChIJ674hC6Y_WBQRujtC6Jay33k",
+    "name": "Cairo, Egypt",
+    "lat": "30.0596185",
+    "lng": "31.1884231"
+  },
+  {
+    "id": "ChIJuSwU55ZS8DURiqkPryBWYrk",
+    "name": "Beijing, China",
+    "lat": "39.9385877",
+    "lng": "115.8369606"
+  },
+  {
+    "id": "ChIJwe1EZjDG5zsRaYxkjY_tpF0",
+    "name": "Mumbai, India",
+    "lat": "19.0826881",
+    "lng": "72.6009747"
+  },
+  {
+    "id": "ChIJ4eIGNFXmAGAR5y9q5G7BW8U",
+    "name": "Osaka, Japan",
+    "lat": "34.6778453",
+    "lng": "135.3459756"
+  },
+  {
+    "id": "ChIJv0sdZQY-sz4RIwxaVUQv-Zw",
+    "name": "Karachi, Pakistan",
+    "lat": "25.1933894",
+    "lng": "66.5949263"
+  },
+  {
+    "id": "ChIJQ0_m87o0kzYRIbOI3BaGn94",
+    "name": "Chongqing, China",
+    "lat": "29.555216",
+    "lng": "106.2683468"
+  },
+  {
+    "id": "ChIJawhoAASnyhQR0LABvJj-zOE",
+    "name": "Istanbul, Turkey",
+    "lat": "41.1933245",
+    "lng": "28.3830446"
+  },
+  {
+    "id": "ChIJvQz5TjvKvJURh47oiC6Bs6A",
+    "name": "Buenos Aires, Argentina",
+    "lat": "-34.6154611",
+    "lng": "-58.5733863"
+  },
+  {
+    "id": "ChIJZ_YISduC-DkRvCxsj-Yw40M",
+    "name": "Kolkata, India",
+    "lat": "22.6762881",
+    "lng": "87.7691884"
+  }
+]

@@ -1,4 +1,4 @@
-import React, { useRef } from "react"
+import React, { useRef, useEffect } from "react"
 import { useSelector, useDispatch } from "react-redux"
 import { navigate } from "@reach/router"
 
@@ -12,17 +12,19 @@ const SearchTopBar = () => {
   const value = useSelector((state) => state.search.query)
   const dispatch = useDispatch()
 
+  useEffect(() => {
+    clearTimeout(timeoutRef.current)
+    timeoutRef.current = setTimeout(() => {
+      dispatch(fetchList(value))
+    }, 150)
+  }, [dispatch, value])
+
   const handleChange = (evt) => {
     if (window.location.pathname !== "/") {
       navigate("/")
     }
-    evt.persist()
-    // redirect to homepage if not already on it
+
     dispatch(setQuery(evt.target.value))
-    clearTimeout(timeoutRef.current)
-    timeoutRef.current = setTimeout(() => {
-      dispatch(fetchList(evt.target.value))
-    }, 150)
   }
 
   return (

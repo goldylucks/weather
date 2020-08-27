@@ -4,7 +4,7 @@ import fetchCitiesService from "./fetchCitiesService"
 
 export const fetchList = createAsyncThunk("cities/fetchList", async (query) => {
   if (!query) {
-    return []
+    return await fetchCitiesService.fetchDefaultList()
   }
 
   return await fetchCitiesService.fetchList(query)
