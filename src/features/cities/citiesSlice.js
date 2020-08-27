@@ -1,13 +1,17 @@
 import { createSlice, createAsyncThunk, createSelector } from "@reduxjs/toolkit"
 
-import fetchListService from "./fetchListService"
+import fetchCitiesService from "./fetchCitiesService"
 
 export const fetchList = createAsyncThunk("cities/fetchList", async (query) => {
   if (!query) {
     return []
   }
 
-  return await fetchListService.fetchList(query)
+  return await fetchCitiesService.fetchList(query)
+})
+
+export const fetchItem = createAsyncThunk("cities/fetchItem", async (id) => {
+  return await fetchCitiesService.fetchItem(id)
 })
 
 const citiesSlice = createSlice({
@@ -48,6 +52,9 @@ const citiesSlice = createSlice({
         (r) => !state.favoritesIds.includes(r.id) // if a result's id is in favoriteIds, it's already in state.list as well
       )
       state.list = results.concat(favorites)
+    },
+    [fetchItem.fulfilled]: (state, action) => {
+      state.list.push(action.payload)
     },
   },
 })

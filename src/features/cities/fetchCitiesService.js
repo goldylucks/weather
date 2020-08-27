@@ -50,7 +50,19 @@ const fetchListService = (function () {
     return details
   }
 
-  return { fetchList }
+  const fetchItem = async (id) => {
+    let details = await promisifiedGetDetails(id)
+    const name = details.name
+    const lng = details.geometry.location.lng()
+    const lat = details.geometry.location.lat()
+    details = await fetch(
+      `http://api.weatherstack.com/current?access_key=d4e06617300d4859d13b9b341fdebb0f&query=${lat},${lng}`
+    )
+    details = await details.json()
+    return { ...details, id, name }
+  }
+
+  return { fetchList, fetchItem }
 })()
 
 export default fetchListService

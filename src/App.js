@@ -11,7 +11,7 @@ function App() {
       <SearchTopBar />
       <Router>
         <HomePage path="/" />
-        <CityPage path="/city/:id" />
+        <CityPage path="/city/:cityId" />
       </Router>
     </div>
   )
