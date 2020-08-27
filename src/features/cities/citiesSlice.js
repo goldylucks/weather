@@ -36,7 +36,7 @@ const citiesSlice = createSlice({
       let results = action.payload.filter(
         (r) => !state.favoritesIds.includes(r.id)
       ) // if a result's id is in favoriteIds, it's already in state.list as well
-      state.list = state.list.concat(results)
+      state.list = results
     },
   },
 })

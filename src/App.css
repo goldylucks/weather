@@ -11,3 +11,7 @@ a {
 .app-container {
   padding-top: 60px; /* offest topbar's height plus some room to breathe */
 }
+
+.page-container {
+  padding-top: 20px;
+}

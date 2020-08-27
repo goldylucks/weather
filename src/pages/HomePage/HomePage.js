@@ -13,11 +13,13 @@ const HomePage = () => {
   const nonFavoriteCities = useSelector(selectNonFavorites)
 
   return (
-    <Container>
-      <Cities title="Favorites" cities={favoriteCities} />
-      {favoriteCities.length > 0 && nonFavoriteCities.length > 0 && <hr />}
-      <Cities title="Search Results" cities={nonFavoriteCities} />
-    </Container>
+    <div className="page-container">
+      <Container>
+        <Cities title="Favorites" cities={favoriteCities} />
+        {favoriteCities.length > 0 && nonFavoriteCities.length > 0 && <hr />}
+        <Cities title="Search Results" cities={nonFavoriteCities} />
+      </Container>
+    </div>
   )
 }
 
