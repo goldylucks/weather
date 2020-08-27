@@ -1,8 +1,9 @@
 import React, { useRef } from "react"
+import { useSelector, useDispatch } from "react-redux"
+import { navigate } from "@reach/router"
 
 import Container from "../../components/Container"
 import styles from "./SearchTopBar.module.css"
-import { useSelector, useDispatch } from "react-redux"
 import { setQuery } from "./searchSlice"
 import { fetchList } from "../cities/citiesSlice"
 
@@ -12,7 +13,11 @@ const SearchTopBar = () => {
   const dispatch = useDispatch()
 
   const handleChange = (evt) => {
+    if (window.location.pathname !== "/") {
+      navigate("/")
+    }
     evt.persist()
+    // redirect to homepage if not already on it
     dispatch(setQuery(evt.target.value))
     clearTimeout(timeoutRef.current)
     timeoutRef.current = setTimeout(() => {
