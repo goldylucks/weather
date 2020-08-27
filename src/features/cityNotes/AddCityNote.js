@@ -1,9 +1,5 @@
 import React, { useState } from "react"
 import { useDispatch } from "react-redux"
-import { faCheck } from "@fortawesome/free-solid-svg-icons"
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome"
-
-import styles from "./CityNotes.module.css"
 import { add } from "./cityNotesSlice"
 
 const AddCityNote = ({ listId }) => {
@@ -28,7 +24,7 @@ const AddCityNote = ({ listId }) => {
         placeholder="Add note here"
         className="textarea"
       />
-      <button onClick={handleAddNote} icon={faCheck} className="button">
+      <button onClick={handleAddNote} className="button">
         Add note
       </button>
     </div>

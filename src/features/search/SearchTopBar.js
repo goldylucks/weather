@@ -19,6 +19,20 @@ const SearchTopBar = () => {
     }, 150)
   }, [dispatch, value])
 
+  // useEffect(() => {
+  //   if (!navigator.geolocation) {
+  //     return
+  //   }
+  //   navigator.geolocation.getCurrentPosition((position) => {
+  //     if (!position) {
+  //       return
+  //     }
+  //     const { latitude, longitude } = position
+  //     dispatch(gotUserCoords({ lat: latitude, lng: longitude }))
+  //     navigate("/user")
+  //   })
+  // }, [dispatch])
+
   const handleChange = (evt) => {
     if (window.location.pathname !== "/") {
       navigate("/")

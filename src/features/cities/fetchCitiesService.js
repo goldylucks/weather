@@ -26,7 +26,6 @@ const fetchListService = (function () {
 
   const fetchList = async (query) => {
     const places = await promisifiedGetPlacePredictions(query)
-    console.log(places)
     const placesPromises = places.map((place) =>
       promisifiedGetDetails(place.place_id)
     )
@@ -54,8 +53,8 @@ const fetchListService = (function () {
     return details
   }
 
-  const fetchItem = async (id) => {
-    let details = await promisifiedGetDetails(id)
+  const fetchItem = async (placeId) => {
+    let details = await promisifiedGetDetails(placeId)
     const name = details.name
     const lng = details.geometry.location.lng()
     const lat = details.geometry.location.lat()
@@ -63,7 +62,7 @@ const fetchListService = (function () {
       `http://api.weatherstack.com/current?access_key=${API_KEY}&query=${lat},${lng}`
     )
     details = await details.json()
-    return { ...details, id, name }
+    return { ...details, id: placeId, name }
   }
 
   const fetchDefaultList = async () => {
