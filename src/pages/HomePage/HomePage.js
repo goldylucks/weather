@@ -1,5 +1,24 @@
 import React from "react"
 
-const HomePage = () => <div>Homepage!</div>
+import Cities from "../../features/cities/Cities"
+import { useSelector } from "react-redux"
+import {
+  selectFavorites,
+  selectNonFavorites,
+} from "../../features/cities/citiesSlice"
+import Container from "../../components/Container"
+
+const HomePage = () => {
+  const favoriteCities = useSelector(selectFavorites)
+  const nonFavoriteCities = useSelector(selectNonFavorites)
+
+  return (
+    <Container>
+      <Cities title="Favorites" cities={favoriteCities} />
+      {favoriteCities.length > 0 && nonFavoriteCities.length > 0 && <hr />}
+      <Cities title="Search Results" cities={nonFavoriteCities} />
+    </Container>
+  )
+}
 
 export default HomePage
