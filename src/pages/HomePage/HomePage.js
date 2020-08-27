@@ -16,7 +16,9 @@ const HomePage = () => {
     <div className="page-container">
       <Container>
         <Cities title="Favorites" cities={favoriteCities} />
-        {favoriteCities.length > 0 && nonFavoriteCities.length > 0 && <hr />}
+        {favoriteCities.length > 0 && nonFavoriteCities.length > 0 && (
+          <hr style={{ margin: 30 }} />
+        )}
         <Cities title="Search Results" cities={nonFavoriteCities} />
       </Container>
     </div>
