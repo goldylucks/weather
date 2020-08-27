@@ -10,11 +10,11 @@ const CityNotes = ({ listId }) => {
   }
 
   return (
-    <div>
+    <ul>
       {Object.values(notes).map((note) => (
         <CityNote listId={listId} key={note.id} {...note} />
       ))}
-    </div>
+    </ul>
   )
 }
 

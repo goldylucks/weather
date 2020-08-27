@@ -26,12 +26,11 @@ const AddCityNote = ({ listId }) => {
         onChange={handleChange}
         value={text}
         placeholder="Add note here"
+        className="textarea"
       />
-      <FontAwesomeIcon
-        onClick={handleAddNote}
-        icon={faCheck}
-        className={styles.addNoteCheck}
-      />
+      <button onClick={handleAddNote} icon={faCheck} className="button">
+        Add note
+      </button>
     </div>
   )
 }

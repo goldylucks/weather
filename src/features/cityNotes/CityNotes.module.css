@@ -1,3 +1,16 @@
-.foo {
-  color: red;
+.cityNote {
+  max-width: 500px; /* match .textarea width from App.css */
+  display: flex;
+  justify-content: space-between;
+  margin-top: 5px;
+  margin-bottom: 5px;
+}
+
+.noteActions {
+  display: flex;
+}
+
+.noteAction {
+  margin-left: 5px;
+  cursor: pointer;
 }

@@ -43,35 +43,39 @@ const CityNote = ({ listId, id, text, isEditing, editingText }) => {
           onChange={handleChange}
           placeholder="Write note here"
           value={editingText}
+          className="textarea"
         />
-        <FontAwesomeIcon
+        <button
+          style={{ marginRight: 10 }}
           onClick={handleConfirmEdit}
           icon={faCheck}
-          className={styles.cityNoteCheck}
-        />
-        <FontAwesomeIcon
-          onClick={handleCancelEdit}
-          icon={faTimes}
-          className={styles.cityNoteCheck}
-        />
+          className="button"
+        >
+          Confirm
+        </button>
+        <button onClick={handleCancelEdit} icon={faTimes} className="button">
+          Cancel
+        </button>
       </div>
     )
   }
 
   return (
-    <div>
+    <li className={styles.cityNote}>
       <p>{text}</p>
-      <FontAwesomeIcon
-        onClick={handleStartEditing}
-        icon={faEdit}
-        className={styles.startEditing}
-      />
-      <FontAwesomeIcon
-        onClick={handleRemoveNote}
-        icon={faTrash}
-        className={styles.removeNote}
-      />
-    </div>
+      <div className={styles.noteActions}>
+        <FontAwesomeIcon
+          onClick={handleStartEditing}
+          icon={faEdit}
+          className={styles.noteAction}
+        />
+        <FontAwesomeIcon
+          onClick={handleRemoveNote}
+          icon={faTrash}
+          className={styles.noteAction}
+        />
+      </div>
+    </li>
   )
 }
 

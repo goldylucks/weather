@@ -49,8 +49,10 @@ const CityPage = ({ cityId }) => {
       <p>
         Wind {wind_speed}km/h, {wind_degree}°, {wind_dir}
       </p>
-      <h3 style={{ marginTop: 20 }}>Notes</h3>
-      <CityNotes listId={cityId} />
+      <h3 style={{ marginTop: 20, marginBottom: 10 }}>Notes</h3>
+      <div style={{ marginBottom: 20 }}>
+        <CityNotes listId={cityId} />
+      </div>
       <AddCityNote listId={cityId} />
     </Container>
   )
