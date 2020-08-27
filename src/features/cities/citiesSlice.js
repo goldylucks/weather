@@ -17,13 +17,21 @@ const citiesSlice = createSlice({
     favoritesIds: [],
   },
   reducers: {
-    addFavorite: (state, action) => {
+    removeCity: (state, action) => {
       const id = action.payload
-      state.favoritesIds.push(id)
+      state.list = state.list.filter((item) => item.id !== id)
+      if (state.favoritesIds.includes(id)) {
+        state.favoritesIds = state.favoritesIds.filter((item) => item.id !== id)
+      }
     },
-    removeFavorite: (state, action) => {
+    toggleFavorite: (state, action) => {
       const id = action.payload
-      state.favoritesIds = state.favoritesIds.filter((f) => f.id !== id)
+      if (state.favoritesIds.includes(id)) {
+        state.favoritesIds = state.favoritesIds.filter((fid) => fid !== id)
+        return state
+      } else {
+        state.favoritesIds.push(id)
+      }
     },
   },
   extraReducers: {
@@ -33,15 +41,18 @@ const citiesSlice = createSlice({
       )
     },
     [fetchList.fulfilled]: (state, action) => {
+      const favorites = state.list.filter((item) =>
+        state.favoritesIds.includes(item.id)
+      )
       let results = action.payload.filter(
-        (r) => !state.favoritesIds.includes(r.id)
-      ) // if a result's id is in favoriteIds, it's already in state.list as well
-      state.list = results
+        (r) => !state.favoritesIds.includes(r.id) // if a result's id is in favoriteIds, it's already in state.list as well
+      )
+      state.list = results.concat(favorites)
     },
   },
 })
 
-export const { addFavorite, removeFavorite } = citiesSlice.actions
+export const { toggleFavorite, removeCity } = citiesSlice.actions
 
 export default citiesSlice.reducer
 
