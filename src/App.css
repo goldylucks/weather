@@ -9,11 +9,7 @@ a {
 }
 
 .app-container {
-  padding-top: 60px; /* offest topbar's height plus some room to breathe */
-}
-
-.page-container {
-  padding-top: 20px;
+  padding-top: 70px; /* offest topbar's height plus some room to breathe */
 }
 
 .textarea {

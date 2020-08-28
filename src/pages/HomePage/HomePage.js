@@ -21,15 +21,13 @@ const HomePage = () => {
     return <Container>Loading ...</Container>
   }
   return (
-    <div className="page-container">
-      <Container>
-        <Cities title="Favorites" cities={favoriteCities} />
-        {favoriteCities.length > 0 && nonFavoriteCities.length > 0 && (
-          <hr style={{ margin: 30 }} />
-        )}
-        <Cities title="Search Results" cities={nonFavoriteCities} />
-      </Container>
-    </div>
+    <Container>
+      <Cities title="Favorites" cities={favoriteCities} />
+      {favoriteCities.length > 0 && nonFavoriteCities.length > 0 && (
+        <hr style={{ margin: 30 }} />
+      )}
+      <Cities title="Search Results" cities={nonFavoriteCities} />
+    </Container>
   )
 }
 

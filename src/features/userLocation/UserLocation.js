@@ -9,6 +9,9 @@ import { setCoords } from "./userLocationSlice"
 const UserLocation = () => {
   const dispatch = useDispatch()
   useEffect(() => {
+    if (process.env.NODE_ENV === "development") {
+      return
+    }
     if (!navigator.geolocation) {
       return
     }
@@ -49,7 +52,10 @@ const UserLocation = () => {
   }
 
   return (
-    <a onClick={handleClick} style={{ display: "flex", fontSize: "0.8em" }}>
+    <a
+      onClick={handleClick}
+      style={{ display: "flex", fontSize: "0.8em", opacity: 0.5 }}
+    >
       My <FontAwesomeIcon icon={faMapMarkerAlt} style={{ marginLeft: 4 }} />
     </a>
   )
