@@ -1,5 +1,5 @@
-import React from "react"
-import { useSelector } from "react-redux"
+import React, { useEffect } from "react"
+import { useSelector, useDispatch } from "react-redux"
 
 import Cities from "../../features/cities/Cities"
 import {
@@ -10,15 +10,29 @@ import {
 import Container from "../Container"
 
 import styles from "./SearchResultsModalForInnerPages.module.css"
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome"
+import { faTimes } from "@fortawesome/free-solid-svg-icons"
+import { setIsModalOpen } from "../../features/search/searchSlice"
 
 const SearchResultsModalForInnerPages = () => {
   const favoriteCities = useSelector(selectFavorites)
   const nonFavoriteCities = useSelector(selectNonFavorites)
   const { listError, isFetchingList } = useSelector((state) => state.cities)
-  const isSearchInputInFocus = useSelector((state) => state.search.inFocus)
-  const isHomepage = window.location.pathname === "/"
+  const { isModalOpen } = useSelector((state) => state.search)
+  const dispatch = useDispatch()
 
-  if (!isSearchInputInFocus || isHomepage) {
+  const closeOnEscape = (evt) => {
+    if (evt.which === 27) {
+      dispatch(setIsModalOpen(false))
+    }
+  }
+
+  useEffect(() => {
+    window.addEventListener("keydown", closeOnEscape)
+    return () => window.addEventListener("keydown", closeOnEscape)
+  })
+
+  if (!isModalOpen) {
     return null
   }
 
@@ -41,7 +55,16 @@ const SearchResultsModalForInnerPages = () => {
     </Container>
   )
 
-  return <div className={styles.modal}>{inner}</div>
+  return (
+    <div className={styles.modal}>
+      {inner}
+      <FontAwesomeIcon
+        onClick={() => dispatch(setIsModalOpen(false))}
+        icon={faTimes}
+        className={styles.close}
+      />
+    </div>
+  )
 }
 
 export default SearchResultsModalForInnerPages

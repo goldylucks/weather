@@ -3,6 +3,7 @@ import { useDispatch } from "react-redux"
 import { navigate } from "@reach/router"
 import { faMapMarkerAlt } from "@fortawesome/free-solid-svg-icons"
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome"
+import { setIsModalOpen } from "../search/searchSlice"
 
 const UserLocation = () => {
   const dispatch = useDispatch()
@@ -25,6 +26,7 @@ const UserLocation = () => {
   }, [dispatch])
 
   const handleClick = () => {
+    dispatch(setIsModalOpen(false))
     if (window.location.pathname === "/user-location") {
       return
     }

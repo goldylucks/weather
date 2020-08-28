@@ -4,18 +4,18 @@ const searchSlice = createSlice({
   name: "search",
   initialState: {
     query: "",
-    inFocus: false,
+    setIsModalOpen: false,
   },
   reducers: {
     setQuery: (state, action) => {
       state.query = action.payload
     },
-    setInFocus: (state, action) => {
-      state.inFocus = action.payload
+    setIsModalOpen: (state, action) => {
+      state.isModalOpen = action.payload
     },
   },
 })
 
-export const { setQuery, setInFocus } = searchSlice.actions
+export const { setQuery, setIsModalOpen } = searchSlice.actions
 
 export default searchSlice.reducer

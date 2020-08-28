@@ -5,14 +5,20 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome"
 import { removeCity, toggleFavorite } from "./citiesSlice"
 import styles from "./Cities.module.css"
 import { useDispatch } from "react-redux"
-import { Link } from "@reach/router"
+import { navigate } from "@reach/router"
+import { setIsModalOpen } from "../search/searchSlice"
 
 const Cities = ({ cities, title, isFavorites }) => {
   const dispatch = useDispatch()
 
+  const handleClick = (cityId) => {
+    dispatch(setIsModalOpen(false))
+    navigate(`/city/${cityId}`)
+  }
+
   const renderCity = (city) => (
     <div key={city.id} className={styles.city}>
-      <Link to={`/city/${city.id}`}>{city.name}</Link>
+      <a onClick={() => handleClick(city.id)}>{city.name}</a>
       <span className={styles.temperature}>{city.current.temperature}°</span>
       <div className={styles.actions}>
         <span onClick={() => dispatch(toggleFavorite(city.id))}>
