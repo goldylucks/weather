@@ -1,10 +1,11 @@
-import React from "react"
+import React, { useEffect } from "react"
 
 import Cities from "../../features/cities/Cities"
-import { useSelector } from "react-redux"
+import { useSelector, useDispatch } from "react-redux"
 import {
   selectFavorites,
   selectNonFavorites,
+  fetchList,
 } from "../../features/cities/citiesSlice"
 import Container from "../../components/Container"
 
@@ -12,6 +13,11 @@ const HomePage = () => {
   const favoriteCities = useSelector(selectFavorites)
   const nonFavoriteCities = useSelector(selectNonFavorites)
   const { listError, isFetchingList } = useSelector((state) => state.cities)
+  const dispatch = useDispatch()
+
+  useEffect(() => {
+    dispatch(fetchList())
+  }, [dispatch])
 
   let searchResults
   if (listError) {
