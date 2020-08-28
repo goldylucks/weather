@@ -18,6 +18,7 @@
 .actions {
   transition: 0.6s opacity;
   margin-left: 15px;
+  display: flex;
 }
 
 .actions svg {

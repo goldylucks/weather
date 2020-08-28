@@ -4,8 +4,6 @@ import { navigate } from "@reach/router"
 import { faMapMarkerAlt } from "@fortawesome/free-solid-svg-icons"
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome"
 
-import { setCoords } from "./userLocationSlice"
-
 const UserLocation = () => {
   const dispatch = useDispatch()
   useEffect(() => {
@@ -15,32 +13,24 @@ const UserLocation = () => {
     if (!navigator.geolocation) {
       return
     }
+    if (window.location.pathname === "/user-location") {
+      return
+    }
     navigator.geolocation.getCurrentPosition((position) => {
       if (!position) {
         return
       }
-      const { latitude, longitude } = position.coords
-      dispatch(setCoords({ lat: latitude, lng: longitude }))
-      if (window.location.pathname === "/user-location") {
-        return
-      }
-      const shouldNavigate = window.confirm(
-        "navigate to a page of your current location?"
-      )
-      if (shouldNavigate) {
-        navigate("/user-location")
-      }
+      navigate("/user-location")
     })
   }, [dispatch])
+
   const handleClick = () => {
+    if (window.location.pathname === "/user-location") {
+      return
+    }
     navigator.geolocation.getCurrentPosition((position) => {
       if (!position) {
         window.alert("Please allow current location detection")
-        return
-      }
-      const { latitude, longitude } = position.coords
-      dispatch(setCoords({ lat: latitude, lng: longitude }))
-      if (window.location.pathname === "/user-location") {
         return
       }
       navigate("/user-location")

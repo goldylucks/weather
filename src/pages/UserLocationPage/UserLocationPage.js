@@ -1,33 +1,35 @@
-import React, { useEffect } from "react"
+import React, { useEffect, useState } from "react"
 import { Link } from "@reach/router"
 
 import Container from "../../components/Container"
 import WeatherDetails from "../../components/WeatherDetails"
 import { useSelector, useDispatch } from "react-redux"
-import { fetchWeather } from "../../features/userLocation/userLocationSlice"
+import {
+  fetchWeather,
+  setCoords,
+} from "../../features/userLocation/userLocationSlice"
 
 const UserLocationPage = () => {
   const dispatch = useDispatch()
-  const { id, lat, lng, name, current, isFetching, error } = useSelector(
+  // const [gotPosition, setGotPosition] = useState(false)
+  const { id, name, lat, current, isFetching, error } = useSelector(
     (state) => state.userLocation
   )
 
   useEffect(() => {
-    if (!lat) {
-      navigator.geolocation.getCurrentPosition((position) => {
-        if (!position) {
-          window.alert(
-            "Please allow current location detection and refresh the page"
-          )
-          return
-        }
-        const { latitude, longitude } = position.coords
-        dispatch(fetchWeather({ lat: latitude, lng: longitude }))
-      })
-    } else {
-      dispatch(fetchWeather({ lat, lng }))
-    }
-  }, [dispatch, lat, lng])
+    navigator.geolocation.getCurrentPosition((position) => {
+      if (!position) {
+        window.alert(
+          "Please allow current location detection and refresh the page"
+        )
+        return
+      }
+      const { latitude, longitude } = position.coords
+      dispatch(fetchWeather({ lat: latitude, lng: longitude }))
+      dispatch(setCoords({ lat: latitude, lng: longitude }))
+      // setGotPosition(true)
+    })
+  }, [dispatch])
 
   // happens when someone sends a direct link here to someone without
   // geolocation support
@@ -44,7 +46,7 @@ const UserLocationPage = () => {
     return <Container>{error}</Container>
   }
 
-  if (isFetching) {
+  if (isFetching || Object.keys(current).length === 0) {
     return <Container>Loading ...</Container>
   }
 
