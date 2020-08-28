@@ -13,20 +13,20 @@ const HomePage = () => {
   const nonFavoriteCities = useSelector(selectNonFavorites)
   const { listError, isFetchingList } = useSelector((state) => state.cities)
 
+  let searchResults
   if (listError) {
-    return <Container>{listError}</Container>
+    searchResults = <Container>{listError}</Container>
+  } else if (isFetchingList) {
+    searchResults = <Container>Loading ...</Container>
+  } else {
+    searchResults = <Cities title="Search Results" cities={nonFavoriteCities} />
   }
 
-  if (isFetchingList) {
-    return <Container>Loading ...</Container>
-  }
   return (
     <Container>
       <Cities title="Favorites" isFavorites cities={favoriteCities} />
-      {favoriteCities.length > 0 && nonFavoriteCities.length > 0 && (
-        <hr style={{ margin: 30 }} />
-      )}
-      <Cities title="Search Results" cities={nonFavoriteCities} />
+      {favoriteCities.length > 0 && <hr style={{ margin: 30 }} />}
+      {searchResults}
     </Container>
   )
 }

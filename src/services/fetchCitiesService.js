@@ -36,6 +36,9 @@ const fetchListService = (function () {
     const googlePlacesPredictions = await promisifiedGetGooglePlacesPredictions(
       query
     )
+    if (googlePlacesPredictions === null) {
+      return []
+    }
     const getGooglePlacesDetailsPromises = googlePlacesPredictions.map(
       (place) => promisifiedGetGooglePlaceDetails(place.place_id)
     )
