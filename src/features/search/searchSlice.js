@@ -4,18 +4,18 @@ const searchSlice = createSlice({
   name: "search",
   initialState: {
     query: "",
-    setIsModalOpen: false,
+    setIsInnerPagesSearchModalOpen: false,
   },
   reducers: {
     setQuery: (state, action) => {
       state.query = action.payload
     },
-    setIsModalOpen: (state, action) => {
-      state.isModalOpen = action.payload
+    setIsInnerPagesSearchModalOpen: (state, action) => {
+      state.isInnerPagesSearchModalOpen = action.payload
     },
   },
 })
 
-export const { setQuery, setIsModalOpen } = searchSlice.actions
+export const { setQuery, setIsInnerPagesSearchModalOpen } = searchSlice.actions
 
 export default searchSlice.reducer

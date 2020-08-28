@@ -4,7 +4,7 @@ import { useSelector, useDispatch } from "react-redux"
 import UserLocation from "../userLocation/UserLocation"
 import Container from "../../components/Container"
 import styles from "./SearchTopBar.module.css"
-import { setQuery, setIsModalOpen } from "./searchSlice"
+import { setQuery, setIsInnerPagesSearchModalOpen } from "./searchSlice"
 import { fetchList } from "../cities/citiesSlice"
 
 const SearchTopBar = () => {
@@ -25,7 +25,7 @@ const SearchTopBar = () => {
 
   const handleFocus = () => {
     if (window.location.pathname !== "/") {
-      dispatch(setIsModalOpen(true))
+      dispatch(setIsInnerPagesSearchModalOpen(true))
     }
   }
 

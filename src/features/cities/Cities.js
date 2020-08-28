@@ -6,15 +6,15 @@ import { removeCity, toggleFavorite } from "./citiesSlice"
 import styles from "./Cities.module.css"
 import { useDispatch, useSelector } from "react-redux"
 import { navigate } from "@reach/router"
-import { setIsModalOpen } from "../search/searchSlice"
+import { setIsInnerPagesSearchModalOpen } from "../search/searchSlice"
 
 const Cities = ({ cities, title, isFavorites }) => {
   const dispatch = useDispatch()
-  const { isModalOpen } = useSelector((state) => state.search)
+  const { isInnerPagesSearchModalOpen } = useSelector((state) => state.search)
 
   const handleClick = (cityId) => {
-    if (isModalOpen) {
-      dispatch(setIsModalOpen(false))
+    if (isInnerPagesSearchModalOpen) {
+      dispatch(setIsInnerPagesSearchModalOpen(false))
     }
     navigate(`/city/${cityId}`)
   }

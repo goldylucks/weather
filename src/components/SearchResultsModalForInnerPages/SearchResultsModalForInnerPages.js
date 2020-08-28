@@ -12,18 +12,18 @@ import Container from "../Container"
 import styles from "./SearchResultsModalForInnerPages.module.css"
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome"
 import { faTimes } from "@fortawesome/free-solid-svg-icons"
-import { setIsModalOpen } from "../../features/search/searchSlice"
+import { setIsInnerPagesSearchModalOpen } from "../../features/search/searchSlice"
 
 const SearchResultsModalForInnerPages = () => {
   const favoriteCities = useSelector(selectFavorites)
   const nonFavoriteCities = useSelector(selectNonFavorites)
   const { listError, isFetchingList } = useSelector((state) => state.cities)
-  const { isModalOpen } = useSelector((state) => state.search)
+  const { isInnerPagesSearchModalOpen } = useSelector((state) => state.search)
   const dispatch = useDispatch()
 
   const closeOnEscape = (evt) => {
     if (evt.which === 27) {
-      dispatch(setIsModalOpen(false))
+      dispatch(setIsInnerPagesSearchModalOpen(false))
     }
   }
 
@@ -32,7 +32,7 @@ const SearchResultsModalForInnerPages = () => {
     return () => window.addEventListener("keydown", closeOnEscape)
   })
 
-  if (!isModalOpen) {
+  if (!isInnerPagesSearchModalOpen) {
     return null
   }
 
@@ -59,7 +59,7 @@ const SearchResultsModalForInnerPages = () => {
     <div className={styles.modal}>
       {inner}
       <FontAwesomeIcon
-        onClick={() => dispatch(setIsModalOpen(false))}
+        onClick={() => dispatch(setIsInnerPagesSearchModalOpen(false))}
         icon={faTimes}
         className={styles.close}
       />

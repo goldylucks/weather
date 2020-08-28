@@ -3,11 +3,11 @@ import { useDispatch, useSelector } from "react-redux"
 import { navigate } from "@reach/router"
 import { faMapMarkerAlt } from "@fortawesome/free-solid-svg-icons"
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome"
-import { setIsModalOpen } from "../search/searchSlice"
+import { setIsInnerPagesSearchModalOpen } from "../search/searchSlice"
 
 const UserLocation = () => {
   const dispatch = useDispatch()
-  const { isModalOpen } = useSelector((state) => state.search)
+  const { isInnerPagesSearchModalOpen } = useSelector((state) => state.search)
   useEffect(() => {
     if (process.env.NODE_ENV === "development") {
       return
@@ -27,8 +27,8 @@ const UserLocation = () => {
   }, [dispatch])
 
   const handleClick = () => {
-    if (isModalOpen) {
-      dispatch(setIsModalOpen(false))
+    if (isInnerPagesSearchModalOpen) {
+      dispatch(setIsInnerPagesSearchModalOpen(false))
     }
     if (window.location.pathname === "/user-location") {
       return
