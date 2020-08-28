@@ -8,7 +8,6 @@ import AddCityNote from "../../features/cityNotes/AddCityNote"
 import WeatherDetails from "../../components/WeatherDetails"
 
 const CityPage = ({ cityId }) => {
-  const [afterInitialUseEffect, setAfterInitialUseEffect] = useState(false)
   const dispatch = useDispatch()
   const { isFetchingItem, itemError } = useSelector((state) => state.cities)
   const city = useSelector(
@@ -22,16 +21,17 @@ const CityPage = ({ cityId }) => {
     if (!city || cityId !== city.id) {
       dispatch(fetchItem(cityId))
     }
-    setAfterInitialUseEffect(true)
   }, [dispatch, cityId, city])
 
   if (itemError) {
     return <Container>{itemError}</Container>
   }
 
-  if (isFetchingItem || (!afterInitialUseEffect && !city)) {
+  if (isFetchingItem || !city) {
     return <Container>Loading ...</Container>
   }
+
+  console.log(city)
 
   return (
     <Container>

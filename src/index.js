@@ -6,10 +6,10 @@ import store from "./app/store"
 import { Provider } from "react-redux"
 import * as serviceWorker from "./serviceWorker"
 
-store.subscribe(() => {
-  const serializedState = JSON.stringify(store.getState())
-  localStorage.setItem("weather-app", serializedState)
-})
+// store.subscribe(() => {
+//   const serializedState = JSON.stringify(store.getState())
+//   localStorage.setItem("weather-app", serializedState)
+// })
 
 const render = (Component) => {
   return ReactDOM.render(
