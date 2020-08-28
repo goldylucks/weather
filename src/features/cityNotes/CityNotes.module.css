@@ -13,4 +13,5 @@
 .noteAction {
   margin-left: 5px;
   cursor: pointer;
+  opacity: 0.5;
 }

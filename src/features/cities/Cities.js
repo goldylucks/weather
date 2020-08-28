@@ -7,7 +7,7 @@ import styles from "./Cities.module.css"
 import { useDispatch } from "react-redux"
 import { Link } from "@reach/router"
 
-const Cities = ({ cities, title }) => {
+const Cities = ({ cities, title, isFavorites }) => {
   const dispatch = useDispatch()
 
   const renderCity = (city) => (
@@ -16,7 +16,10 @@ const Cities = ({ cities, title }) => {
       <span className={styles.temperature}>{city.current.temperature}°</span>
       <div className={styles.actions}>
         <span onClick={() => dispatch(toggleFavorite(city.id))}>
-          <FontAwesomeIcon icon={faHeart} />
+          <FontAwesomeIcon
+            icon={faHeart}
+            style={{ color: isFavorites ? "#f7002b" : "inherit" }}
+          />
         </span>
         <span onClick={() => dispatch(removeCity(city.id))}>
           <FontAwesomeIcon icon={faTrashAlt} />

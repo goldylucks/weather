@@ -1,7 +1,6 @@
 import React from "react"
 import { faEdit } from "@fortawesome/free-regular-svg-icons"
-import { faTimes, faTrash } from "@fortawesome/free-solid-svg-icons"
-import { faCheck } from "@fortawesome/free-solid-svg-icons"
+import { faTrashAlt } from "@fortawesome/free-solid-svg-icons"
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome"
 import styles from "./CityNotes.module.css"
 import { useDispatch } from "react-redux"
@@ -48,12 +47,11 @@ const CityNote = ({ listId, id, text, isEditing, editingText }) => {
         <button
           style={{ marginRight: 10 }}
           onClick={handleConfirmEdit}
-          icon={faCheck}
           className="button"
         >
           Confirm
         </button>
-        <button onClick={handleCancelEdit} icon={faTimes} className="button">
+        <button onClick={handleCancelEdit} className="button">
           Cancel
         </button>
       </div>
@@ -71,7 +69,7 @@ const CityNote = ({ listId, id, text, isEditing, editingText }) => {
         />
         <FontAwesomeIcon
           onClick={handleRemoveNote}
-          icon={faTrash}
+          icon={faTrashAlt}
           className={styles.noteAction}
         />
       </div>

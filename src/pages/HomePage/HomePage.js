@@ -22,7 +22,7 @@ const HomePage = () => {
   }
   return (
     <Container>
-      <Cities title="Favorites" cities={favoriteCities} />
+      <Cities title="Favorites" isFavorites cities={favoriteCities} />
       {favoriteCities.length > 0 && nonFavoriteCities.length > 0 && (
         <hr style={{ margin: 30 }} />
       )}

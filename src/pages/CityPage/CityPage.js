@@ -14,12 +14,10 @@ const CityPage = ({ cityId }) => {
   const city = useSelector((state) => state.cities.cityDetails)
 
   useEffect(() => {
-    console.log("useEffect")
     dispatch(fetchItem(cityId))
     setDidCallFetch(true)
   }, [dispatch, cityId])
 
-  console.log("render")
   if (itemError) {
     return <Container>{itemError}</Container>
   }
