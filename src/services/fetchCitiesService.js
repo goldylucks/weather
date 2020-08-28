@@ -1,7 +1,7 @@
 import largestCitiesByPopulation from "../features/cities/largestCitiesByPopulation.json"
 
 const fetchListService = (function () {
-  const API_KEY = "77ae428f2dcd90c39e83c809e48c0e0e"
+  const API_KEY = "b46aae739e2962e88de88a2a425d1501"
   const googleAutocompleteService = new window.google.maps.places.AutocompleteService()
   const googlePlacesService = new window.google.maps.places.PlacesService(
     document.querySelector("#dummy-for-google-places")

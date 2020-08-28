@@ -4,6 +4,7 @@ import SearchTopBar from "./features/search/SearchTopBar"
 import HomePage from "./pages/HomePage"
 import CityPage from "./pages/CityPage"
 import UserLocationPage from "./pages/UserLocationPage"
+import SearchResultsModalForInnerPages from "./components/SearchResultsModalForInnerPages"
 import "./App.css"
 
 function App() {
@@ -15,6 +16,7 @@ function App() {
         <CityPage path="/city/:cityId" />
         <UserLocationPage path="/user-location" />
       </Router>
+      <SearchResultsModalForInnerPages />
     </div>
   )
 }

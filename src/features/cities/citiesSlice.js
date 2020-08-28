@@ -82,9 +82,7 @@ const citiesSlice = createSlice({
     },
     [fetchItem.fulfilled]: (state, action) => {
       state.isFetchingItem = false
-      // we are only fetching city info if it's not on the list
-      // so add it to the list
-      state.list.push(action.payload)
+      state.cityDetails = action.payload
     },
     [fetchItem.rejected]: (state, action) => {
       state.isFetchingItem = false

@@ -5,10 +5,11 @@ import { navigate } from "@reach/router"
 import UserLocation from "../userLocation/UserLocation"
 import Container from "../../components/Container"
 import styles from "./SearchTopBar.module.css"
-import { setQuery } from "./searchSlice"
+import { setQuery, setInFocus } from "./searchSlice"
 import { fetchList } from "../cities/citiesSlice"
 
 const SearchTopBar = () => {
+  const inputEl = useRef(null)
   const timeoutRef = useRef()
   const value = useSelector((state) => state.search.query)
   const dispatch = useDispatch()
@@ -21,10 +22,6 @@ const SearchTopBar = () => {
   }, [dispatch, value])
 
   const handleChange = (evt) => {
-    if (window.location.pathname !== "/") {
-      navigate("/")
-    }
-
     dispatch(setQuery(evt.target.value))
   }
 
@@ -33,6 +30,9 @@ const SearchTopBar = () => {
       <Container>
         <div style={{ display: "flex" }}>
           <input
+            onFocus={() => dispatch(setInFocus(true))}
+            onBlur={() => dispatch(setInFocus(false))}
+            ref={inputEl}
             value={value}
             onChange={handleChange}
             placeholder="Search cities"

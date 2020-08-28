@@ -1,4 +1,4 @@
-import React, { useEffect } from "react"
+import React, { useEffect, useState } from "react"
 import Container from "../../components/Container"
 import { useSelector, useDispatch } from "react-redux"
 import { Link } from "@reach/router"
@@ -8,26 +8,23 @@ import AddCityNote from "../../features/cityNotes/AddCityNote"
 import WeatherDetails from "../../components/WeatherDetails"
 
 const CityPage = ({ cityId }) => {
+  const [didCallFetch, setDidCallFetch] = useState(false)
   const dispatch = useDispatch()
   const { isFetchingItem, itemError } = useSelector((state) => state.cities)
-  const city = useSelector((state) =>
-    state.cities.list.find((city) => city.id === cityId)
-  )
+  const city = useSelector((state) => state.cities.cityDetails)
 
-  // happens when opening a direct link without searching first
-  // or on pressing the back button and landing here after
-  // this city was removed from the search results and it's not in favorites
   useEffect(() => {
-    if (!city) {
-      dispatch(fetchItem(cityId))
-    }
-  }, [city, dispatch, cityId])
+    console.log("useEffect")
+    dispatch(fetchItem(cityId))
+    setDidCallFetch(true)
+  }, [dispatch, cityId])
 
+  console.log("render")
   if (itemError) {
     return <Container>{itemError}</Container>
   }
 
-  if (isFetchingItem) {
+  if (isFetchingItem || !didCallFetch) {
     return <Container>Loading ...</Container>
   }
 
