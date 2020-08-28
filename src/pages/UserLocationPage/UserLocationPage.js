@@ -59,7 +59,7 @@ const UserLocationPage = () => {
       <div style={{ marginBottom: 20 }}>
         <Link to="/">Back to list</Link>
       </div>
-      <h1>{name}</h1>
+      <h1 style={{ marginBottom: 10 }}>{name}</h1>
       <WeatherDetails {...current} />
       <h3 style={{ marginTop: 20, marginBottom: 10 }}>Notes</h3>
       {/* <div style={{ marginBottom: 20 }}>

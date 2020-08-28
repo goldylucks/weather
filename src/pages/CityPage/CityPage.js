@@ -33,7 +33,7 @@ const CityPage = ({ cityId }) => {
       <div style={{ marginBottom: 20 }}>
         <Link to="/">Back to list</Link>
       </div>
-      <h1>{city.name}</h1>
+      <h1 style={{ marginBottom: 10 }}>{city.name}</h1>
       <WeatherDetails {...city.current} />
       <h3 style={{ marginTop: 20, marginBottom: 10 }}>Notes</h3>
       <div style={{ marginBottom: 20 }}>
