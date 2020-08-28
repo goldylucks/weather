@@ -31,6 +31,7 @@ const citiesSlice = createSlice({
   initialState: {
     list: [],
     favoritesIds: [],
+    cityDetails: {},
     isFetchingList: false,
     isFetchingItem: false,
     listError: "",
