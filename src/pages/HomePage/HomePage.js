@@ -11,7 +11,15 @@ import Container from "../../components/Container"
 const HomePage = () => {
   const favoriteCities = useSelector(selectFavorites)
   const nonFavoriteCities = useSelector(selectNonFavorites)
+  const { listError, isFetchingList } = useSelector((state) => state.cities)
 
+  if (listError) {
+    return <Container>{listError}</Container>
+  }
+
+  if (isFetchingList) {
+    return <Container>Loading ...</Container>
+  }
   return (
     <div className="page-container">
       <Container>

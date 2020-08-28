@@ -3,6 +3,7 @@ import { Router } from "@reach/router"
 import SearchTopBar from "./features/search/SearchTopBar"
 import HomePage from "./pages/HomePage"
 import CityPage from "./pages/CityPage"
+import UserLocationPage from "./pages/UserLocationPage"
 import "./App.css"
 
 function App() {
@@ -12,6 +13,7 @@ function App() {
       <Router>
         <HomePage path="/" />
         <CityPage path="/city/:cityId" />
+        <UserLocationPage path="/user-location" />
       </Router>
     </div>
   )

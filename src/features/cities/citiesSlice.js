@@ -1,17 +1,29 @@
 import { createSlice, createAsyncThunk, createSelector } from "@reduxjs/toolkit"
 
-import fetchCitiesService from "./fetchCitiesService"
+import fetchCitiesService from "../../services/fetchCitiesService"
 
 export const fetchList = createAsyncThunk("cities/fetchList", async (query) => {
-  if (!query) {
-    return await fetchCitiesService.fetchDefaultList()
+  const result = query
+    ? await fetchCitiesService.fetchList(query)
+    : await fetchCitiesService.fetchDefaultList()
+
+  if (result.some((r) => r.error)) {
+    throw new Error(
+      "There was an error processing your request, please try again"
+    )
   }
 
-  return await fetchCitiesService.fetchList(query)
+  return result
 })
 
 export const fetchItem = createAsyncThunk("cities/fetchItem", async (id) => {
-  return await fetchCitiesService.fetchItem(id)
+  const result = await fetchCitiesService.fetchItem(id)
+  if (result.error) {
+    throw new Error(
+      "There was an error processing your request, please try again"
+    )
+  }
+  return result
 })
 
 const citiesSlice = createSlice({
@@ -19,6 +31,10 @@ const citiesSlice = createSlice({
   initialState: {
     list: [],
     favoritesIds: [],
+    isFetchingList: false,
+    isFetchingItem: false,
+    listError: "",
+    itemError: "",
   },
   reducers: {
     removeCity: (state, action) => {
@@ -40,11 +56,14 @@ const citiesSlice = createSlice({
   },
   extraReducers: {
     [fetchList.pending]: (state) => {
+      state.isFetchingList = true
+      state.listError = ""
       state.list = state.list.filter((item) =>
         state.favoritesIds.includes(item.id)
       )
     },
     [fetchList.fulfilled]: (state, action) => {
+      state.isFetchingList = false
       const favorites = state.list.filter((item) =>
         state.favoritesIds.includes(item.id)
       )
@@ -53,8 +72,23 @@ const citiesSlice = createSlice({
       )
       state.list = results.concat(favorites)
     },
+    [fetchList.rejected]: (state, action) => {
+      state.isFetchingList = false
+      state.listError = action.error.message
+    },
+    [fetchItem.pending]: (state, action) => {
+      state.isFetchingItem = true
+      state.itemError = ""
+    },
     [fetchItem.fulfilled]: (state, action) => {
+      state.isFetchingItem = false
+      // we are only fetching city info if it's not on the list
+      // so add it to the list
       state.list.push(action.payload)
+    },
+    [fetchItem.rejected]: (state, action) => {
+      state.isFetchingItem = false
+      state.itemError = action.error.message
     },
   },
 })

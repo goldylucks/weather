@@ -5,9 +5,11 @@ import { Link } from "@reach/router"
 import { fetchItem } from "../../features/cities/citiesSlice"
 import CityNotes from "../../features/cityNotes/CityNotes"
 import AddCityNote from "../../features/cityNotes/AddCityNote"
+import WeatherDetails from "../../components/WeatherDetails"
 
 const CityPage = ({ cityId }) => {
   const dispatch = useDispatch()
+  const { isFetchingItem, itemError } = useSelector((state) => state.cities)
   const city = useSelector((state) =>
     state.cities.list.find((city) => city.id === cityId)
   )
@@ -21,19 +23,13 @@ const CityPage = ({ cityId }) => {
     }
   }, [city, dispatch, cityId])
 
-  if (!city) {
-    return <p>Loading ...</p>
+  if (itemError) {
+    return <Container>{itemError}</Container>
   }
 
-  const {
-    temperature,
-    weather_descriptions,
-    wind_speed,
-    wind_degree,
-    wind_dir,
-    humidity,
-    feelslike,
-  } = city.current
+  if (isFetchingItem) {
+    return <Container>Loading ...</Container>
+  }
 
   return (
     <Container>
@@ -41,14 +37,7 @@ const CityPage = ({ cityId }) => {
         <Link to="/">Back to list</Link>
       </div>
       <h1>{city.name}</h1>
-      <p>
-        {weather_descriptions.join(", ")} {temperature}°
-      </p>
-      <p>Feels like {feelslike}°</p>
-      <p>Humidity {humidity}</p>
-      <p>
-        Wind {wind_speed}km/h, {wind_degree}°, {wind_dir}
-      </p>
+      <WeatherDetails {...city.current} />
       <h3 style={{ marginTop: 20, marginBottom: 10 }}>Notes</h3>
       <div style={{ marginBottom: 20 }}>
         <CityNotes listId={cityId} />

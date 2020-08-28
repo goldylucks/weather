@@ -1,4 +1,4 @@
-import largestCitiesByPopulation from "./largestCitiesByPopulation.json"
+import largestCitiesByPopulation from "../features/cities/largestCitiesByPopulation.json"
 
 const fetchListService = (function () {
   const API_KEY = "d4e06617300d4859d13b9b341fdebb0f"
@@ -6,6 +6,11 @@ const fetchListService = (function () {
   const places = new window.google.maps.places.PlacesService(
     document.querySelector("#dummy-for-google-places")
   )
+
+  const fetchItemWeatherDetails = ({ lat, lng }) =>
+    fetch(
+      `http://api.weatherstack.com/current?access_key=${API_KEY}&query=${lat},${lng}`
+    )
 
   const promisifiedGetDetails = (placeId) =>
     new Promise((resolve) => {
@@ -34,11 +39,7 @@ const fetchListService = (function () {
       d.geometry.location.lat(),
       d.geometry.location.lng(),
     ])
-    details = details.map(([lat, lng]) =>
-      fetch(
-        `http://api.weatherstack.com/current?access_key=${API_KEY}&query=${lat},${lng}`
-      )
-    )
+    details = details.map(([lat, lng]) => fetchItemWeatherDetails({ lat, lng }))
     details = await Promise.all(details)
     details = details.map((d) => d.json())
     details = await Promise.all(details)
@@ -58,9 +59,7 @@ const fetchListService = (function () {
     const name = details.name
     const lng = details.geometry.location.lng()
     const lat = details.geometry.location.lat()
-    details = await fetch(
-      `http://api.weatherstack.com/current?access_key=${API_KEY}&query=${lat},${lng}`
-    )
+    details = await fetchItemWeatherDetails({ lat, lng })
     details = await details.json()
     return { ...details, id: placeId, name }
   }
@@ -84,7 +83,13 @@ const fetchListService = (function () {
     return details
   }
 
-  return { fetchList, fetchItem, fetchDefaultList }
+  const fetchUserLocationItem = async ({ lat, lng }) => {
+    let details = await fetchItemWeatherDetails({ lat, lng })
+    details = await details.json()
+    return details
+  }
+
+  return { fetchList, fetchItem, fetchDefaultList, fetchUserLocationItem }
 })()
 
 export default fetchListService
