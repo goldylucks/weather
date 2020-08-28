@@ -66,9 +66,7 @@ const fetchListService = (function () {
 
   const fetchDefaultList = async () => {
     const fetches = largestCitiesByPopulation.map(({ lat, lng }) =>
-      fetch(
-        `http://api.weatherstack.com/current?access_key=${API_KEY}&query=${lat},${lng}`
-      )
+      fetchItemWeatherDetails({ lat, lng })
     )
     let details = await Promise.all(fetches)
     details = details.map((d) => d.json())
