@@ -13,8 +13,7 @@ a {
 }
 
 .textarea {
-  max-width: 100%;
-  width: 500px;
+  width: 100%;
   outline: none;
   border: none;
   resize: none;
