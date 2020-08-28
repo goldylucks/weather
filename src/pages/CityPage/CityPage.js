@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react"
+import React, { useEffect } from "react"
 import Container from "../../components/Container"
 import { useSelector, useDispatch } from "react-redux"
 import { Link } from "@reach/router"
@@ -30,8 +30,6 @@ const CityPage = ({ cityId }) => {
   if (isFetchingItem || !city) {
     return <Container>Loading ...</Container>
   }
-
-  console.log(city)
 
   return (
     <Container>

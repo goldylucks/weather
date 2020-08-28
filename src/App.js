@@ -1,4 +1,4 @@
-import React from "react"
+import React, { useState } from "react"
 import { Router } from "@reach/router"
 import SearchTopBar from "./features/search/SearchTopBar"
 import HomePage from "./pages/HomePage"
@@ -8,11 +8,12 @@ import SearchResultsModalForInnerPages from "./components/SearchResultsModalForI
 import "./App.css"
 
 function App() {
+  const [isTopbarMounted, setIsTopbarMounted] = useState(false)
   return (
     <div className="app-container">
-      <SearchTopBar />
+      <SearchTopBar onMount={() => setIsTopbarMounted(true)} />
       <Router>
-        <HomePage path="/" />
+        <HomePage path="/" isTopbarMounted={isTopbarMounted} />
         <CityPage path="/city/:cityId" />
         <UserLocationPage path="/user-location" />
       </Router>

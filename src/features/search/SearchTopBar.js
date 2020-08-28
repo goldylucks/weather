@@ -7,17 +7,24 @@ import styles from "./SearchTopBar.module.css"
 import { setQuery, setIsInnerPagesSearchModalOpen } from "./searchSlice"
 import { fetchList } from "../cities/citiesSlice"
 
-const SearchTopBar = () => {
+const SearchTopBar = ({ onMount }) => {
   const timeoutRef = useRef()
+  const isInitialRender = useRef(true)
   const { query } = useSelector((state) => state.search)
   const dispatch = useDispatch()
 
   useEffect(() => {
+    if (isInitialRender.current) {
+      onMount()
+      dispatch(fetchList(query))
+      isInitialRender.current = false
+      return
+    }
     clearTimeout(timeoutRef.current)
     timeoutRef.current = setTimeout(() => {
       dispatch(fetchList(query))
     }, 150)
-  }, [dispatch, query])
+  }, [dispatch, onMount, query])
 
   const handleChange = (evt) => {
     dispatch(setQuery(evt.target.value))

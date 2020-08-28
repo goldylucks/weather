@@ -1,29 +1,22 @@
-import React, { useEffect, useRef, useState } from "react"
+import React from "react"
 
 import Cities from "../../features/cities/Cities"
-import { useSelector, useDispatch } from "react-redux"
+import { useSelector } from "react-redux"
 import {
   selectFavorites,
   selectNonFavorites,
 } from "../../features/cities/citiesSlice"
 import Container from "../../components/Container"
 
-const HomePage = () => {
-  // const [isInitialRender, setIsInitialRender] = useState(true)
-  // console.log("homepage render isInitial", isInitialRender.current)
+const HomePage = ({ isTopbarMounted }) => {
   const favoriteCities = useSelector(selectFavorites)
   const nonFavoriteCities = useSelector(selectNonFavorites)
   const { listError, isFetchingList } = useSelector((state) => state.cities)
-  const dispatch = useDispatch()
-
-  // useEffect(() => {
-  //   setIsInitialRender(false)
-  // }, [])
 
   let searchResults
   if (listError) {
     searchResults = <Container>{listError}</Container>
-  } else if (isFetchingList) {
+  } else if (isFetchingList || !isTopbarMounted) {
     searchResults = <Container>Loading ...</Container>
   } else if (nonFavoriteCities.length === 0) {
     searchResults = <Container>No cities found</Container>
