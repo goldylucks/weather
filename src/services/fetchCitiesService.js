@@ -2,8 +2,8 @@ import largestCitiesByPopulation from "../features/cities/largestCitiesByPopulat
 
 const fetchListService = (function () {
   const API_KEY = "d4e06617300d4859d13b9b341fdebb0f"
-  const autocomplete = new window.google.maps.places.AutocompleteService()
-  const places = new window.google.maps.places.PlacesService(
+  const googleAutocompleteService = new window.google.maps.places.AutocompleteService()
+  const googlePlacesService = new window.google.maps.places.PlacesService(
     document.querySelector("#dummy-for-google-places")
   )
 
@@ -12,16 +12,19 @@ const fetchListService = (function () {
       `http://api.weatherstack.com/current?access_key=${API_KEY}&query=${lat},${lng}`
     )
 
-  const promisifiedGetDetails = (placeId) =>
+  const promisifiedGetGooglePlaceDetails = (googlePlaceId) =>
     new Promise((resolve) => {
-      places.getDetails({ placeId }, (placeResult) => {
-        resolve(placeResult)
-      })
+      googlePlacesService.getDetails(
+        { placeId: googlePlaceId },
+        (placeResult) => {
+          resolve(placeResult)
+        }
+      )
     })
 
-  const promisifiedGetPlacePredictions = (query) =>
+  const promisifiedGetGooglePlacesPredictions = (query) =>
     new Promise((resolve) => {
-      autocomplete.getPlacePredictions(
+      googleAutocompleteService.getPlacePredictions(
         { types: ["(cities)"], input: query },
         (predictions) => {
           resolve(predictions)
@@ -30,55 +33,62 @@ const fetchListService = (function () {
     })
 
   const fetchList = async (query) => {
-    const places = await promisifiedGetPlacePredictions(query)
-    const placesPromises = places.map((place) =>
-      promisifiedGetDetails(place.place_id)
+    const googlePlacesPredictions = await promisifiedGetGooglePlacesPredictions(
+      query
     )
-    let details = await Promise.all(placesPromises)
-    details = details.map((d) => [
+    const getGooglePlacesDetailsPromises = googlePlacesPredictions.map(
+      (place) => promisifiedGetGooglePlaceDetails(place.place_id)
+    )
+    let googlePlacesDetails = await Promise.all(getGooglePlacesDetailsPromises)
+    googlePlacesDetails = googlePlacesDetails.map((d) => [
       d.geometry.location.lat(),
       d.geometry.location.lng(),
     ])
-    details = details.map(([lat, lng]) => fetchItemWeatherDetails({ lat, lng }))
-    details = await Promise.all(details)
-    details = details.map((d) => d.json())
-    details = await Promise.all(details)
+    const fetchItemsWeatherPromises = googlePlacesDetails.map(([lat, lng]) =>
+      fetchItemWeatherDetails({ lat, lng })
+    )
+    const itemsWeatherResponses = await Promise.all(fetchItemsWeatherPromises)
+    const itemsWeatherJsonsPromises = itemsWeatherResponses.map((d) => d.json())
+    let itemsWeatherJsons = await Promise.all(itemsWeatherJsonsPromises)
     // The api service we use, weatherstack, has inaccurate names and no ids, so we
-    // attach the names and ids from google places
-    details = details.map((d, idx) => ({
+    // attach the names from google places. Attaching the ids from google places is
+    // needed for deep linking a city page, i.e. /city/GOOGLE_PLACE_ID
+    itemsWeatherJsons = itemsWeatherJsons.map((d, idx) => ({
       ...d,
-      name: places[idx].description,
-      id: places[idx].place_id,
+      name: googlePlacesPredictions[idx].description,
+      id: googlePlacesPredictions[idx].place_id,
     }))
 
-    return details
+    return itemsWeatherJsons
   }
 
-  const fetchItem = async (placeId) => {
-    let details = await promisifiedGetDetails(placeId)
-    const name = details.name
-    const lng = details.geometry.location.lng()
-    const lat = details.geometry.location.lat()
-    details = await fetchItemWeatherDetails({ lat, lng })
-    details = await details.json()
-    return { ...details, id: placeId, name }
+  const fetchItem = async (googlePlaceId) => {
+    const googlePlaceDetails = await promisifiedGetGooglePlaceDetails(
+      googlePlaceId
+    )
+    const { name } = googlePlaceDetails
+    const lng = googlePlaceDetails.geometry.location.lng()
+    const lat = googlePlaceDetails.geometry.location.lat()
+    const itemWeatherResponse = await fetchItemWeatherDetails({ lat, lng })
+    const itemWeatherJson = await itemWeatherResponse.json()
+    return { ...itemWeatherJson, id: googlePlaceId, name }
   }
 
   const fetchDefaultList = async () => {
-    const fetches = largestCitiesByPopulation.map(({ lat, lng }) =>
-      fetchItemWeatherDetails({ lat, lng })
+    const fetchItemsWeatherPromises = largestCitiesByPopulation.map(
+      ({ lat, lng }) => fetchItemWeatherDetails({ lat, lng })
     )
-    let details = await Promise.all(fetches)
-    details = details.map((d) => d.json())
-    details = await Promise.all(details)
+    const itemsWeatherResponses = await Promise.all(fetchItemsWeatherPromises)
+    const itemsWeatherJsonsPromises = itemsWeatherResponses.map((d) => d.json())
+    let itemsWeatherJsons = await Promise.all(itemsWeatherJsonsPromises)
     // The api service we use, weatherstack, has inaccurate names and no ids, so we
     // attach the names and ids from google places
-    details = details.map((d, idx) => ({
+    itemsWeatherJsons = itemsWeatherJsons.map((d, idx) => ({
       ...d,
       name: largestCitiesByPopulation[idx].name,
       id: largestCitiesByPopulation[idx].id,
     }))
-    return details
+    return itemsWeatherJsons
   }
 
   const fetchUserLocationItem = async ({ lat, lng }) => {
