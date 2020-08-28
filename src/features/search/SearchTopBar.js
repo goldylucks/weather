@@ -9,15 +9,10 @@ import { fetchList } from "../cities/citiesSlice"
 
 const SearchTopBar = () => {
   const timeoutRef = useRef()
-  const isInitialRender = useRef(true)
   const { query } = useSelector((state) => state.search)
   const dispatch = useDispatch()
 
   useEffect(() => {
-    if (isInitialRender.current) {
-      isInitialRender.current = false
-      return
-    }
     clearTimeout(timeoutRef.current)
     timeoutRef.current = setTimeout(() => {
       dispatch(fetchList(query))
