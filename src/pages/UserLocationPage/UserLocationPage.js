@@ -10,8 +10,9 @@ import {
 } from "../../features/userLocation/userLocationSlice"
 
 const UserLocationPage = () => {
+  const [didCallFetch, setDidCallFetch] = useState(false)
   const dispatch = useDispatch()
-  // const [gotPosition, setGotPosition] = useState(false)
+  const [gotPosition, setGotPosition] = useState(false)
   const { id, name, lat, current, isFetching, error } = useSelector(
     (state) => state.userLocation
   )
@@ -27,7 +28,7 @@ const UserLocationPage = () => {
       const { latitude, longitude } = position.coords
       dispatch(fetchWeather({ lat: latitude, lng: longitude }))
       dispatch(setCoords({ lat: latitude, lng: longitude }))
-      // setGotPosition(true)
+      setDidCallFetch(true)
     })
   }, [dispatch])
 
@@ -46,7 +47,7 @@ const UserLocationPage = () => {
     return <Container>{error}</Container>
   }
 
-  if (isFetching || Object.keys(current).length === 0) {
+  if (isFetching || !didCallFetch || Object.keys(current).length === 0) {
     return <Container>Loading ...</Container>
   }
 
