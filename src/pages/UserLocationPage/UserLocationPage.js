@@ -3,6 +3,8 @@ import { Link } from "@reach/router"
 
 import Container from "../../components/Container"
 import WeatherDetails from "../../components/WeatherDetails"
+import CityNotes from "../../features/cityNotes/CityNotes"
+import AddCityNote from "../../features/cityNotes/AddCityNote"
 import { useSelector, useDispatch } from "react-redux"
 import {
   fetchWeather,
@@ -12,7 +14,6 @@ import {
 const UserLocationPage = () => {
   const [didCallFetch, setDidCallFetch] = useState(false)
   const dispatch = useDispatch()
-  const [gotPosition, setGotPosition] = useState(false)
   const { id, name, lat, current, isFetching, error } = useSelector(
     (state) => state.userLocation
   )
@@ -63,10 +64,10 @@ const UserLocationPage = () => {
       <h1 style={{ marginBottom: 10 }}>{name}</h1>
       <WeatherDetails {...current} />
       <h3 style={{ marginTop: 20, marginBottom: 10 }}>Notes</h3>
-      {/* <div style={{ marginBottom: 20 }}>
+      <div style={{ marginBottom: 20 }}>
         <CityNotes listId={id} />
       </div>
-      <AddCityNote listId={id} /> */}
+      <AddCityNote listId={id} />
     </Container>
   )
 }
