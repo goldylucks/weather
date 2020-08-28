@@ -18,6 +18,8 @@ const HomePage = () => {
     searchResults = <Container>{listError}</Container>
   } else if (isFetchingList) {
     searchResults = <Container>Loading ...</Container>
+  } else if (nonFavoriteCities.length === 0) {
+    searchResults = <Container>No cities found</Container>
   } else {
     searchResults = <Cities title="Search Results" cities={nonFavoriteCities} />
   }

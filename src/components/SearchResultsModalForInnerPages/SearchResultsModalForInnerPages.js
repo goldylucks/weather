@@ -36,34 +36,28 @@ const SearchResultsModalForInnerPages = () => {
     return null
   }
 
-  let inner
+  let searchResults
   if (listError) {
-    inner = <Container>{listError}</Container>
+    searchResults = <Container>{listError}</Container>
+  } else if (isFetchingList) {
+    searchResults = <Container>Loading ...</Container>
+  } else if (nonFavoriteCities.length === 0) {
+    searchResults = <Container>No cities found</Container>
+  } else {
+    searchResults = <Cities title="Search Results" cities={nonFavoriteCities} />
   }
-
-  if (isFetchingList) {
-    inner = <Container>Loading ...</Container>
-  }
-
-  inner = (
-    <Container>
-      <Cities title="Favorites" isFavorites cities={favoriteCities} />
-      {favoriteCities.length > 0 && nonFavoriteCities.length > 0 && (
-        <hr style={{ margin: 30 }} />
-      )}
-      <Cities title="Search Results" cities={nonFavoriteCities} />
-    </Container>
-  )
 
   return (
-    <div className={styles.modal}>
-      {inner}
+    <Container className={styles.modal}>
+      <Cities title="Favorites" isFavorites cities={favoriteCities} />
+      {favoriteCities.length > 0 && <hr style={{ margin: 30 }} />}
+      {searchResults}
       <FontAwesomeIcon
         onClick={() => dispatch(setIsInnerPagesSearchModalOpen(false))}
         icon={faTimes}
         className={styles.close}
       />
-    </div>
+    </Container>
   )
 }
 
