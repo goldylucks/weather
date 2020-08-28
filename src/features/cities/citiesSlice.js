@@ -101,11 +101,25 @@ const selectFavoritesIds = (state) => state.cities.favoritesIds
 export const selectFavorites = createSelector(
   [selectList, selectFavoritesIds],
   (list, favoriteIds) =>
-    list.filter((city) => favoriteIds.includes(city.id)).sort()
+    list
+      .filter((city) => favoriteIds.includes(city.id))
+      .sort(sortCitiesAlphabetically)
 )
 
 export const selectNonFavorites = createSelector(
   [selectList, selectFavoritesIds],
   (list, favoriteIds) =>
-    list.filter((city) => !favoriteIds.includes(city.id)).sort()
+    list
+      .filter((city) => !favoriteIds.includes(city.id))
+      .sort(sortCitiesAlphabetically)
 )
+
+function sortCitiesAlphabetically(a, b) {
+  if (a.name < b.name) {
+    return -1
+  }
+  if (a.name > b.name) {
+    return 1
+  }
+  return 0
+}
