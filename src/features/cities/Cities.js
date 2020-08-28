@@ -4,15 +4,18 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome"
 
 import { removeCity, toggleFavorite } from "./citiesSlice"
 import styles from "./Cities.module.css"
-import { useDispatch } from "react-redux"
+import { useDispatch, useSelector } from "react-redux"
 import { navigate } from "@reach/router"
 import { setIsModalOpen } from "../search/searchSlice"
 
 const Cities = ({ cities, title, isFavorites }) => {
   const dispatch = useDispatch()
+  const { isModalOpen } = useSelector((state) => state.search)
 
   const handleClick = (cityId) => {
-    dispatch(setIsModalOpen(false))
+    if (isModalOpen) {
+      dispatch(setIsModalOpen(false))
+    }
     navigate(`/city/${cityId}`)
   }
 

@@ -1,5 +1,5 @@
 import React, { useEffect } from "react"
-import { useDispatch } from "react-redux"
+import { useDispatch, useSelector } from "react-redux"
 import { navigate } from "@reach/router"
 import { faMapMarkerAlt } from "@fortawesome/free-solid-svg-icons"
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome"
@@ -7,6 +7,7 @@ import { setIsModalOpen } from "../search/searchSlice"
 
 const UserLocation = () => {
   const dispatch = useDispatch()
+  const { isModalOpen } = useSelector((state) => state.search)
   useEffect(() => {
     if (process.env.NODE_ENV === "development") {
       return
@@ -26,7 +27,9 @@ const UserLocation = () => {
   }, [dispatch])
 
   const handleClick = () => {
-    dispatch(setIsModalOpen(false))
+    if (isModalOpen) {
+      dispatch(setIsModalOpen(false))
+    }
     if (window.location.pathname === "/user-location") {
       return
     }

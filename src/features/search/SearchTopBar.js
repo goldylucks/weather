@@ -9,15 +9,15 @@ import { fetchList } from "../cities/citiesSlice"
 
 const SearchTopBar = () => {
   const timeoutRef = useRef()
-  const value = useSelector((state) => state.search.query)
+  const { query } = useSelector((state) => state.search)
   const dispatch = useDispatch()
 
   useEffect(() => {
     clearTimeout(timeoutRef.current)
     timeoutRef.current = setTimeout(() => {
-      dispatch(fetchList(value))
+      dispatch(fetchList(query))
     }, 150)
-  }, [dispatch, value])
+  }, [dispatch, query])
 
   const handleChange = (evt) => {
     dispatch(setQuery(evt.target.value))
@@ -35,7 +35,7 @@ const SearchTopBar = () => {
         <div style={{ display: "flex" }}>
           <input
             onFocus={handleFocus}
-            value={value}
+            value={query}
             onChange={handleChange}
             placeholder="Search cities"
             className={styles.input}
