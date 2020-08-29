@@ -1,5 +1,6 @@
 import React from "react"
 import { useSelector } from "react-redux"
+import PropTypes from "prop-types"
 import CityNote from "./CityNote"
 
 const CityNotes = ({ listId }) => {
@@ -16,6 +17,10 @@ const CityNotes = ({ listId }) => {
       ))}
     </ul>
   )
+}
+
+CityNotes.propTypes = {
+  listId: PropTypes.string.isRequired,
 }
 
 export default CityNotes

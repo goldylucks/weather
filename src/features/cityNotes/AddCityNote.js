@@ -1,5 +1,6 @@
 import React, { useState } from "react"
 import { useDispatch } from "react-redux"
+import PropTypes from "prop-types"
 import { add } from "./cityNotesSlice"
 
 const AddCityNote = ({ listId }) => {
@@ -29,6 +30,10 @@ const AddCityNote = ({ listId }) => {
       </button>
     </div>
   )
+}
+
+AddCityNote.propTypes = {
+  listId: PropTypes.string.isRequired,
 }
 
 export default AddCityNote

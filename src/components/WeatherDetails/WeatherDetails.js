@@ -1,4 +1,5 @@
 import React from "react"
+import PropTypes from "prop-types"
 
 const WeatherDetails = ({
   temperature,
@@ -20,5 +21,15 @@ const WeatherDetails = ({
     </p>
   </div>
 )
+
+WeatherDetails.propTypes = {
+  temperature: PropTypes.number.isRequired,
+  weather_descriptions: PropTypes.array.isRequired,
+  wind_speed: PropTypes.number.isRequired,
+  wind_degree: PropTypes.number.isRequired,
+  wind_dir: PropTypes.string.isRequired,
+  humidity: PropTypes.number.isRequired,
+  feelslike: PropTypes.number.isRequired,
+}
 
 export default WeatherDetails

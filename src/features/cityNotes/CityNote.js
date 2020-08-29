@@ -1,5 +1,6 @@
 import React from "react"
 import { faEdit } from "@fortawesome/free-regular-svg-icons"
+import PropTypes from "prop-types"
 import { faTrashAlt } from "@fortawesome/free-solid-svg-icons"
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome"
 import styles from "./CityNotes.module.css"
@@ -75,6 +76,14 @@ const CityNote = ({ listId, id, text, isEditing, editingText }) => {
       </div>
     </li>
   )
+}
+
+CityNote.propTypes = {
+  listId: PropTypes.string.isRequired,
+  id: PropTypes.string.isRequired,
+  text: PropTypes.string.isRequired,
+  isEditing: PropTypes.bool.isRequired,
+  editingText: PropTypes.string.isRequired,
 }
 
 export default CityNote

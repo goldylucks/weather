@@ -1,5 +1,6 @@
 import React, { useRef, useEffect } from "react"
 import { useSelector, useDispatch } from "react-redux"
+import PropTypes from "prop-types"
 
 import UserLocation from "../userLocation/UserLocation"
 import Container from "../../components/Container"
@@ -52,6 +53,10 @@ const SearchTopBar = ({ onMount }) => {
       </Container>
     </div>
   )
+}
+
+SearchTopBar.propTypes = {
+  onMount: PropTypes.func.isRequired,
 }
 
 export default SearchTopBar

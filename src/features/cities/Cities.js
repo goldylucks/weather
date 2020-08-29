@@ -1,6 +1,7 @@
 import React from "react"
 import { faTrashAlt, faHeart } from "@fortawesome/free-regular-svg-icons"
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome"
+import PropTypes from "prop-types"
 
 import { removeCity, toggleFavorite } from "./citiesSlice"
 import styles from "./Cities.module.css"
@@ -47,6 +48,20 @@ const Cities = ({ cities, title, isFavorites }) => {
       {cities.map(renderCity)}
     </div>
   )
+}
+
+Cities.propTypes = {
+  title: PropTypes.string.isRequired,
+  isFavorites: PropTypes.bool,
+  cities: PropTypes.arrayOf(
+    PropTypes.shape({
+      id: PropTypes.string.isRequired,
+      name: PropTypes.string.isRequired,
+      current: PropTypes.shape({
+        temperature: PropTypes.number.isRequired,
+      }).isRequired,
+    })
+  ).isRequired,
 }
 
 export default Cities

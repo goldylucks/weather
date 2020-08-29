@@ -1,4 +1,5 @@
 import React, { useEffect } from "react"
+import PropTypes from "prop-types"
 import Container from "../../components/Container"
 import { useSelector, useDispatch } from "react-redux"
 import { Link } from "@reach/router"
@@ -45,6 +46,10 @@ const CityPage = ({ cityId }) => {
       <AddCityNote listId={cityId} />
     </Container>
   )
+}
+
+CityPage.propTypes = {
+  cityId: PropTypes.string,
 }
 
 export default CityPage
