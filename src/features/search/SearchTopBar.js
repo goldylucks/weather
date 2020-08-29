@@ -9,13 +9,16 @@ import Container from "../../components/Container"
 import styles from "./SearchTopBar.module.css"
 import { setQuery, setIsInnerPagesSearchModalOpen } from "./searchSlice"
 import { fetchList } from "../cities/citiesSlice"
+import useDebounce from "../../hooks/useDebounce"
 
 const SearchTopBar = ({ onMount }) => {
   const isOnline = useIsOnline()
-  const timeoutRef = useRef()
   const isInitialRender = useRef(true)
   const { query } = useSelector((state) => state.search)
   const dispatch = useDispatch()
+  const debouncedFetchList = useDebounce(() => {
+    dispatch(fetchList(query))
+  }, 150)
 
   useEffect(() => {
     if (isInitialRender.current) {
@@ -26,13 +29,10 @@ const SearchTopBar = ({ onMount }) => {
       isInitialRender.current = false
       return
     }
-    clearTimeout(timeoutRef.current)
     if (!isOnline) {
       return
     }
-    timeoutRef.current = setTimeout(() => {
-      dispatch(fetchList(query))
-    }, 150)
+    debouncedFetchList()
 
     // adding dispatch or onMount as dependencies cause a rerender when
     // app switching between online and offline and vice versa
@@ -40,7 +40,6 @@ const SearchTopBar = ({ onMount }) => {
   }, [query])
 
   const handleChange = (evt) => {
-    console.log("handle change", evt)
     dispatch(setQuery(evt.target.value))
   }
 
