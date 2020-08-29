@@ -1,9 +1,9 @@
 import React, { useEffect, useState } from "react"
-import { Link } from "@reach/router"
 
 import useIsOnline from "../../hooks/useIsOnline"
 import Container from "../../components/Container"
 import WeatherDetails from "../../components/WeatherDetails"
+import BackToList from "../../components/BackToList"
 import CityNotes from "../../features/cityNotes/CityNotes"
 import AddCityNote from "../../features/cityNotes/AddCityNote"
 import { useSelector, useDispatch } from "react-redux"
@@ -21,6 +21,8 @@ const UserLocationPage = () => {
   )
 
   useEffect(() => {
+    // happens when someone sends a direct link here to someone without
+    // geolocation support
     if (!navigator.geolocation) {
       return
     }
@@ -30,71 +32,72 @@ const UserLocationPage = () => {
       return
     }
 
-    navigator.geolocation.getCurrentPosition((position) => {
-      if (!position) {
+    navigator.geolocation.getCurrentPosition(
+      (position) => {
+        const { latitude, longitude } = position.coords
+        dispatch(fetchWeather({ lat: latitude, lng: longitude }))
+        dispatch(setCoords({ lat: latitude, lng: longitude }))
+        setIsInitialRender(false)
+      },
+      (error) => {
+        // happens when someone sends a direct link here to someone
+        // who declines location detection
         window.alert(
           "Please allow current location detection and refresh the page"
         )
-        return
       }
-      const { latitude, longitude } = position.coords
-      dispatch(fetchWeather({ lat: latitude, lng: longitude }))
-      dispatch(setCoords({ lat: latitude, lng: longitude }))
-      setIsInitialRender(false)
-    })
+    )
   }, [dispatch, isOnline])
 
   // happens when someone sends a direct link here to someone without
   // geolocation support
   if (!navigator.geolocation) {
     return (
-      <Container>
-        <Link to="/">Back to list</Link>
+      <BackToList>
         <p>Your browser doesn't support detecting current location</p>
-      </Container>
+      </BackToList>
     )
   }
 
   const contents = (
-    <Container>
-      <div style={{ marginBottom: 20 }}>
-        <Link to="/">Back to list</Link>
-      </div>
-      <h1 style={{ marginBottom: 10 }}>{name}</h1>
-      <WeatherDetails {...current} />
-      <h3 style={{ marginTop: 20, marginBottom: 10 }}>Notes</h3>
-      <div style={{ marginBottom: 20 }}>
-        <CityNotes listId={id} />
-      </div>
-      <AddCityNote listId={id} />
-    </Container>
+    <div>
+      <BackToList />
+      <Container>
+        <h1 style={{ marginBottom: 10 }}>{name}</h1>
+        <WeatherDetails {...current} />
+        <h3 style={{ marginTop: 20, marginBottom: 10 }}>Notes</h3>
+        <div style={{ marginBottom: 20 }}>
+          <CityNotes listId={id} />
+        </div>
+        <AddCityNote listId={id} />
+      </Container>
+    </div>
   )
 
   if (error) {
-    return <Container>{error}</Container>
+    return <BackToList>{error}</BackToList>
   }
 
-  if (!isOnline && Object.keys(current).length !== 0) {
+  // return cached contents
+  if (!isOnline && name) {
     return contents
   }
 
-  if (!isOnline && Object.keys(current).length === 0) {
+  // no cached contents
+  if (!isOnline && !name) {
     return (
-      <Container>
-        <div style={{ marginBottom: 20 }}>
-          <Link to="/">Back to list</Link>
-        </div>
+      <BackToList>
         <p>Can't fetch details about your location when you're offline</p>
-      </Container>
+      </BackToList>
     )
   }
 
-  if (isFetching || isInitialRender || Object.keys(current).length === 0) {
+  if (isFetching || isInitialRender || !name) {
     return <Container>Loading ...</Container>
   }
 
   if (!lat) {
-    return <Container>Please allow current location detection</Container>
+    return <BackToList>Please allow current location detection</BackToList>
   }
 
   return contents

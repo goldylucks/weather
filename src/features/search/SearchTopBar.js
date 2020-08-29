@@ -1,6 +1,5 @@
-import React, { useRef, useEffect } from "react"
+import React, { useEffect } from "react"
 import { useSelector, useDispatch } from "react-redux"
-import PropTypes from "prop-types"
 import cx from "classnames"
 
 import useIsOnline from "../../hooks/useIsOnline"

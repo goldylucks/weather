@@ -1,5 +1,4 @@
 import React from "react"
-import PropTypes from "prop-types"
 
 import Cities from "../../features/cities/Cities"
 import { useSelector } from "react-redux"
