@@ -8,6 +8,10 @@ const cityNotesSlice = createSlice({
     remove: (state, action) => {
       const { listId, id } = action.payload
       delete state[listId][id]
+      // delete the list key if it's the last note
+      if (Object.keys(state[listId]).length === 0) {
+        delete state[listId]
+      }
       return state
     },
     add: (state, action) => {
