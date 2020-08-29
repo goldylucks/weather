@@ -16,6 +16,10 @@ a {
   padding-top: 70px; /* offest topbar's height plus some room to breathe */
 }
 
+.app-container.is-offline {
+  padding-bottom: 25px; /* offset offline bar */
+}
+
 .textarea {
   width: 100%;
   outline: none;

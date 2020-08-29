@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react"
 import { Link } from "@reach/router"
 
+import useIsOnline from "../../hooks/useIsOnline"
 import Container from "../../components/Container"
 import WeatherDetails from "../../components/WeatherDetails"
 import CityNotes from "../../features/cityNotes/CityNotes"
@@ -12,13 +13,23 @@ import {
 } from "../../features/userLocation/userLocationSlice"
 
 const UserLocationPage = () => {
-  const [didCallFetch, setDidCallFetch] = useState(false)
+  const isOnline = useIsOnline()
+  const [isInitialRender, setIsInitialRender] = useState(true)
   const dispatch = useDispatch()
   const { id, name, lat, current, isFetching, error } = useSelector(
     (state) => state.userLocation
   )
 
   useEffect(() => {
+    if (!navigator.geolocation) {
+      return
+    }
+
+    if (!isOnline) {
+      setIsInitialRender(false)
+      return
+    }
+
     navigator.geolocation.getCurrentPosition((position) => {
       if (!position) {
         window.alert(
@@ -29,9 +40,9 @@ const UserLocationPage = () => {
       const { latitude, longitude } = position.coords
       dispatch(fetchWeather({ lat: latitude, lng: longitude }))
       dispatch(setCoords({ lat: latitude, lng: longitude }))
-      setDidCallFetch(true)
+      setIsInitialRender(false)
     })
-  }, [dispatch])
+  }, [dispatch, isOnline])
 
   // happens when someone sends a direct link here to someone without
   // geolocation support
@@ -48,7 +59,7 @@ const UserLocationPage = () => {
     return <Container>{error}</Container>
   }
 
-  if (isFetching || !didCallFetch || Object.keys(current).length === 0) {
+  if (isFetching || isInitialRender || Object.keys(current).length === 0) {
     return <Container>Loading ...</Container>
   }
 

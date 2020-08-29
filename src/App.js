@@ -1,16 +1,21 @@
 import React, { useState } from "react"
 import { Router } from "@reach/router"
+import cx from "classnames"
+
 import SearchTopBar from "./features/search/SearchTopBar"
 import HomePage from "./pages/HomePage"
 import CityPage from "./pages/CityPage"
 import UserLocationPage from "./pages/UserLocationPage"
 import SearchResultsModalForInnerPages from "./components/SearchResultsModalForInnerPages"
 import "./App.css"
+import OfflineBar from "./components/OfflineBar/OfflineBar"
+import useIsOnline from "./hooks/useIsOnline"
 
 function App() {
+  const isOnline = useIsOnline()
   const [isTopbarMounted, setIsTopbarMounted] = useState(false)
   return (
-    <div className="app-container">
+    <div className={cx("app-container", { "is-offline": !isOnline })}>
       <SearchTopBar onMount={() => setIsTopbarMounted(true)} />
       <Router>
         <HomePage path="/" isTopbarMounted={isTopbarMounted} />
@@ -18,6 +23,7 @@ function App() {
         <UserLocationPage path="/user-location" />
       </Router>
       <SearchResultsModalForInnerPages />
+      <OfflineBar />
     </div>
   )
 }

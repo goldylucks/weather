@@ -36,7 +36,7 @@ const SearchResultsModalForInnerPages = () => {
 
   useEffect(() => {
     window.addEventListener("keydown", closeOnEscape)
-    return () => window.addEventListener("keydown", closeOnEscape)
+    return () => window.removeEventListener("keydown", closeOnEscape)
   })
 
   if (!isInnerPagesSearchModalOpen) {
