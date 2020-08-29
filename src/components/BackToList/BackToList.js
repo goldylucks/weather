@@ -5,7 +5,7 @@ import Container from "../Container"
 
 const BackToList = ({ children }) => (
   <Container>
-    <div>
+    <div style={{ marginBottom: 20 }}>
       <Link to="/">Back to list</Link>
     </div>
     {children}
