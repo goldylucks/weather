@@ -55,19 +55,7 @@ const UserLocationPage = () => {
     )
   }
 
-  if (error) {
-    return <Container>{error}</Container>
-  }
-
-  if (isFetching || isInitialRender || Object.keys(current).length === 0) {
-    return <Container>Loading ...</Container>
-  }
-
-  if (!lat) {
-    return <Container>Please allow current location detection</Container>
-  }
-
-  return (
+  const contents = (
     <Container>
       <div style={{ marginBottom: 20 }}>
         <Link to="/">Back to list</Link>
@@ -81,6 +69,35 @@ const UserLocationPage = () => {
       <AddCityNote listId={id} />
     </Container>
   )
+
+  if (error) {
+    return <Container>{error}</Container>
+  }
+
+  if (!isOnline && Object.keys(current).length !== 0) {
+    return contents
+  }
+
+  if (!isOnline && Object.keys(current).length === 0) {
+    return (
+      <Container>
+        <div style={{ marginBottom: 20 }}>
+          <Link to="/">Back to list</Link>
+        </div>
+        <p>Can't fetch details about your location when you're offline</p>
+      </Container>
+    )
+  }
+
+  if (isFetching || isInitialRender || Object.keys(current).length === 0) {
+    return <Container>Loading ...</Container>
+  }
+
+  if (!lat) {
+    return <Container>Please allow current location detection</Container>
+  }
+
+  return contents
 }
 
 export default UserLocationPage
