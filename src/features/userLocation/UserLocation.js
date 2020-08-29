@@ -19,18 +19,20 @@ const UserLocation = () => {
     if (window.location.pathname === "/user-location") {
       return
     }
-    navigator.geolocation.getCurrentPosition((position) => {
-      if (!position) {
-        return
+    navigator.geolocation.getCurrentPosition(
+      (position) => {
+        // if lat is not present, it's the first time user has granted location
+        // detection, so we navigate to user location page. If lat is present,
+        // we could get here from refreshing any of the pages, or by opening
+        // the app. Navigating the user then is bad UX
+        if (!lat) {
+          navigate("/user-location")
+        }
+      },
+      (error) => {
+        window.alert("location detection failed")
       }
-      // if lat is not present, it's the first time user has granted location
-      // detection, so we navigate to user location page. If lat is present,
-      // we could get here from refreshing any of the pages, or by opening
-      // the app. Navigating the user then is bad UX
-      if (!lat) {
-        navigate("/user-location")
-      }
-    })
+    )
   }, [lat])
 
   const handleClick = () => {
@@ -40,13 +42,14 @@ const UserLocation = () => {
     if (window.location.pathname === "/user-location") {
       return
     }
-    navigator.geolocation.getCurrentPosition((position) => {
-      if (!position) {
-        window.alert("Please allow current location detection")
-        return
+    navigator.geolocation.getCurrentPosition(
+      (position) => {
+        navigate("/user-location")
+      },
+      (error) => {
+        window.alert("location detection failed")
       }
-      navigate("/user-location")
-    })
+    )
   }
 
   if (!navigator.geolocation) {
