@@ -22,7 +22,9 @@ const Cities = ({ cities, title, isFavorites }) => {
 
   const renderCity = (city) => (
     <div key={city.id} className={styles.city}>
-      <a onClick={() => handleClick(city.id)}>{city.name}</a>
+      <button className="button-link" onClick={() => handleClick(city.id)}>
+        {city.name}
+      </button>
       <span className={styles.temperature}>{city.current.temperature}°</span>
       <div className={styles.actions}>
         <span onClick={() => dispatch(toggleFavorite(city.id))}>

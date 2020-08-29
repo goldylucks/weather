@@ -40,3 +40,11 @@ a {
   outline: none;
   cursor: pointer;
 }
+
+.button-link {
+  border: none;
+  outline: none;
+  cursor: pointer;
+  padding: 0;
+  background: none;
+}
