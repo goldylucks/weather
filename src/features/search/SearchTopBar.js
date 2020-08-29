@@ -18,14 +18,18 @@ const SearchTopBar = ({ onMount }) => {
   const dispatch = useDispatch()
 
   useEffect(() => {
-    console.log("useEffect")
     if (isInitialRender.current) {
       onMount()
-      dispatch(fetchList(query))
+      if (isOnline) {
+        dispatch(fetchList(query))
+      }
       isInitialRender.current = false
       return
     }
     clearTimeout(timeoutRef.current)
+    if (!isOnline) {
+      return
+    }
     timeoutRef.current = setTimeout(() => {
       dispatch(fetchList(query))
     }, 150)

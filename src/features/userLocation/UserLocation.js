@@ -8,6 +8,7 @@ import { setIsInnerPagesSearchModalOpen } from "../search/searchSlice"
 const UserLocation = () => {
   const dispatch = useDispatch()
   const { isInnerPagesSearchModalOpen } = useSelector((state) => state.search)
+  const { lat } = useSelector((state) => state.userLocation)
   useEffect(() => {
     if (process.env.NODE_ENV === "development") {
       return
@@ -22,9 +23,15 @@ const UserLocation = () => {
       if (!position) {
         return
       }
-      navigate("/user-location")
+      // if lat is not present, it's the first time user has granted location
+      // detection, so we navigate to user location page. If lat is present,
+      // we could get here from refreshing any of the pages, or by opening
+      // the app. Navigating the user then is bad UX
+      if (!lat) {
+        navigate("/user-location")
+      }
     })
-  }, [dispatch])
+  }, [lat])
 
   const handleClick = () => {
     if (isInnerPagesSearchModalOpen) {
