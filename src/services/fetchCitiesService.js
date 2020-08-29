@@ -2,10 +2,22 @@ import largestCitiesByPopulation from "../features/cities/largestCitiesByPopulat
 
 const fetchListService = (function () {
   const API_KEY = "b46aae739e2962e88de88a2a425d1501"
-  const googleAutocompleteService = new window.google.maps.places.AutocompleteService()
-  const googlePlacesService = new window.google.maps.places.PlacesService(
-    document.querySelector("#dummy-for-google-places")
-  )
+  let googleAutocompleteService
+  let googlePlacesService
+  const getGoogleAutocompleteService = () => {
+    if (!googleAutocompleteService) {
+      googleAutocompleteService = new window.google.maps.places.AutocompleteService()
+    }
+    return googleAutocompleteService
+  }
+  const getGooglePlacesService = () => {
+    if (!googlePlacesService) {
+      googlePlacesService = new window.google.maps.places.PlacesService(
+        document.querySelector("#dummy-for-google-places")
+      )
+    }
+    return googlePlacesService
+  }
 
   const fetchItemWeatherDetails = ({ lat, lng }) =>
     fetch(
@@ -14,7 +26,7 @@ const fetchListService = (function () {
 
   const promisifiedGetGooglePlaceDetails = (googlePlaceId) =>
     new Promise((resolve) => {
-      googlePlacesService.getDetails(
+      getGooglePlacesService().getDetails(
         { placeId: googlePlaceId },
         (placeResult) => {
           resolve(placeResult)
@@ -24,7 +36,7 @@ const fetchListService = (function () {
 
   const promisifiedGetGooglePlacesPredictions = (query) =>
     new Promise((resolve) => {
-      googleAutocompleteService.getPlacePredictions(
+      getGoogleAutocompleteService().getPlacePredictions(
         { types: ["(cities)"], input: query },
         (predictions) => {
           resolve(predictions)

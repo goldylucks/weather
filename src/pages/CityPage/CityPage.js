@@ -25,7 +25,15 @@ const CityPage = ({ cityId }) => {
   }, [dispatch, cityId, city])
 
   if (itemError) {
-    return <Container>{itemError}</Container>
+    return (
+      <Container>
+        {" "}
+        <div style={{ marginBottom: 20 }}>
+          <Link to="/">Back to list</Link>
+        </div>
+        {itemError}
+      </Container>
+    )
   }
 
   if (isFetchingItem || !city) {
