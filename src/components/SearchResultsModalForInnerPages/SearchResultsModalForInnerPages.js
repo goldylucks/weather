@@ -1,4 +1,4 @@
-import React, { useEffect, useRef } from "react"
+import React, { useEffect } from "react"
 import { useSelector, useDispatch } from "react-redux"
 
 import Cities from "../../features/cities/Cities"
@@ -15,7 +15,6 @@ import { faTimes } from "@fortawesome/free-solid-svg-icons"
 import { setIsInnerPagesSearchModalOpen } from "../../features/search/searchSlice"
 
 const SearchResultsModalForInnerPages = () => {
-  const isInitialRender = useRef(true)
   const favoriteCities = useSelector(selectFavorites)
   const nonFavoriteCities = useSelector(selectNonFavorites)
   const { listError, isFetchingList } = useSelector((state) => state.cities)
@@ -29,12 +28,6 @@ const SearchResultsModalForInnerPages = () => {
   }
 
   useEffect(() => {
-    if (isInitialRender.current) {
-      isInitialRender.current = false
-    }
-  }, [])
-
-  useEffect(() => {
     window.addEventListener("keydown", closeOnEscape)
     return () => window.removeEventListener("keydown", closeOnEscape)
   })
@@ -46,7 +39,7 @@ const SearchResultsModalForInnerPages = () => {
   let searchResults
   if (listError) {
     searchResults = <Container>{listError}</Container>
-  } else if (isFetchingList || isInitialRender.current) {
+  } else if (isFetchingList) {
     searchResults = <Container>Loading ...</Container>
   } else if (nonFavoriteCities.length === 0) {
     searchResults = <Container>No cities found</Container>
