@@ -9,7 +9,7 @@ import {
 } from "../../features/cities/citiesSlice"
 import Container from "../../components/Container"
 
-const HomePage = ({ isTopbarMounted }) => {
+const HomePage = () => {
   const favoriteCities = useSelector(selectFavorites)
   const nonFavoriteCities = useSelector(selectNonFavorites)
   const { listError, isFetchingList } = useSelector((state) => state.cities)
@@ -17,7 +17,7 @@ const HomePage = ({ isTopbarMounted }) => {
   let searchResults
   if (listError) {
     searchResults = <Container>{listError}</Container>
-  } else if (isFetchingList || !isTopbarMounted) {
+  } else if (isFetchingList) {
     searchResults = <Container>Loading ...</Container>
   } else if (nonFavoriteCities.length === 0) {
     searchResults = <Container>No cities found</Container>
@@ -32,10 +32,6 @@ const HomePage = ({ isTopbarMounted }) => {
       {searchResults}
     </Container>
   )
-}
-
-HomePage.propTypes = {
-  isTopbarMounted: PropTypes.bool.isRequired,
 }
 
 export default HomePage

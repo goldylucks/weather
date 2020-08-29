@@ -13,12 +13,11 @@ import useIsOnline from "./hooks/useIsOnline"
 
 function App() {
   const isOnline = useIsOnline()
-  const [isTopbarMounted, setIsTopbarMounted] = useState(false)
   return (
     <div className={cx("app-container", { "is-offline": !isOnline })}>
-      <SearchTopBar onMount={() => setIsTopbarMounted(true)} />
+      <SearchTopBar />
       <Router>
-        <HomePage path="/" isTopbarMounted={isTopbarMounted} />
+        <HomePage path="/" />
         <CityPage path="/city/:cityId" />
         <UserLocationPage path="/user-location" />
       </Router>

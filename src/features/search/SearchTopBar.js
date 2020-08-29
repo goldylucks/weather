@@ -10,31 +10,27 @@ import styles from "./SearchTopBar.module.css"
 import { setQuery, setIsInnerPagesSearchModalOpen } from "./searchSlice"
 import { fetchList } from "../cities/citiesSlice"
 import useDebounce from "../../hooks/useDebounce"
+import useComponentWillMount from "../../hooks/useComponentWillMount"
 
-const SearchTopBar = ({ onMount }) => {
+const SearchTopBar = () => {
   const isOnline = useIsOnline()
-  const isInitialRender = useRef(true)
   const { query } = useSelector((state) => state.search)
   const dispatch = useDispatch()
   const debouncedFetchList = useDebounce(() => {
     dispatch(fetchList(query))
   }, 150)
+  useComponentWillMount(() => {
+    if (isOnline) {
+      dispatch(fetchList(query))
+    }
+  })
 
   useEffect(() => {
-    if (isInitialRender.current) {
-      onMount()
-      if (isOnline) {
-        dispatch(fetchList(query))
-      }
-      isInitialRender.current = false
-      return
-    }
     if (!isOnline) {
       return
     }
     debouncedFetchList()
-
-    // adding dispatch or onMount as dependencies cause a rerender when
+    // adding dispatch as dependency cause a rerender when
     // app switching between online and offline and vice versa
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [query])
@@ -75,10 +71,6 @@ const SearchTopBar = ({ onMount }) => {
       </Container>
     </div>
   )
-}
-
-SearchTopBar.propTypes = {
-  onMount: PropTypes.func.isRequired,
 }
 
 export default SearchTopBar
