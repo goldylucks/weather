@@ -9,8 +9,22 @@
   display: flex;
 }
 
+.noteActions:not(.is-mobile) {
+  transition: 0.6s opacity;
+  opacity: 0;
+}
+
+.cityNote:hover .noteActions {
+  opacity: 1;
+}
+
 .noteAction {
   margin-left: 5px;
   cursor: pointer;
   opacity: 0.5;
+}
+
+.noteAction:hover {
+  opacity: 1;
+  transition: 0.6s opacity;
 }

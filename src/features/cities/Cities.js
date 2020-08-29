@@ -2,7 +2,9 @@ import React from "react"
 import { faTrashAlt, faHeart } from "@fortawesome/free-regular-svg-icons"
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome"
 import PropTypes from "prop-types"
+import cx from "classnames"
 
+import { IS_MOBILE } from "../../constants/mobile"
 import { removeCity, toggleFavorite } from "./citiesSlice"
 import styles from "./Cities.module.css"
 import { useDispatch, useSelector } from "react-redux"
@@ -22,20 +24,22 @@ const Cities = ({ cities, title, isFavorites }) => {
 
   const renderCity = (city) => (
     <div key={city.id} className={styles.city}>
-      <button className="button-link" onClick={() => handleClick(city.id)}>
-        {city.name}
-      </button>
-      <span className={styles.temperature}>{city.current.temperature}°</span>
-      <div className={styles.actions}>
-        <span onClick={() => dispatch(toggleFavorite(city.id))}>
-          <FontAwesomeIcon
-            icon={faHeart}
-            style={{ color: isFavorites ? "#f7002b" : "inherit" }}
-          />
-        </span>
-        <span onClick={() => dispatch(removeCity(city.id))}>
-          <FontAwesomeIcon icon={faTrashAlt} />
-        </span>
+      <span>
+        <button className="button-link" onClick={() => handleClick(city.id)}>
+          {city.name}
+        </button>
+        <span className={styles.temperature}>{city.current.temperature}°</span>
+      </span>
+      <div className={cx(styles.actions, { [styles["is-mobile"]]: IS_MOBILE })}>
+        <FontAwesomeIcon
+          onClick={() => dispatch(toggleFavorite(city.id))}
+          icon={faHeart}
+          style={{ color: isFavorites ? "#f7002b" : "inherit" }}
+        />
+        <FontAwesomeIcon
+          onClick={() => dispatch(removeCity(city.id))}
+          icon={faTrashAlt}
+        />
       </div>
     </div>
   )

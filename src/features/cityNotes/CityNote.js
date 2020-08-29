@@ -3,6 +3,8 @@ import { faEdit } from "@fortawesome/free-regular-svg-icons"
 import PropTypes from "prop-types"
 import { faTrashAlt } from "@fortawesome/free-solid-svg-icons"
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome"
+import cx from "classnames"
+import { IS_MOBILE } from "../../constants/mobile"
 import styles from "./CityNotes.module.css"
 import { useDispatch } from "react-redux"
 import {
@@ -62,7 +64,9 @@ const CityNote = ({ listId, id, text, isEditing, editingText }) => {
   return (
     <li className={styles.cityNote}>
       <p>{text}</p>
-      <div className={styles.noteActions}>
+      <div
+        className={cx(styles.noteActions, { [styles["is-mobile"]]: IS_MOBILE })}
+      >
         <FontAwesomeIcon
           onClick={handleStartEditing}
           icon={faEdit}
