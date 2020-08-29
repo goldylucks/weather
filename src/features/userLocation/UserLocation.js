@@ -10,9 +10,9 @@ const UserLocation = () => {
   const { isInnerPagesSearchModalOpen } = useSelector((state) => state.search)
   const { lat } = useSelector((state) => state.userLocation)
   useEffect(() => {
-    if (process.env.NODE_ENV === "development") {
-      return
-    }
+    // if (process.env.NODE_ENV === "development") {
+    //   return
+    // }
     if (!navigator.geolocation) {
       return
     }

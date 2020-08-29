@@ -21,7 +21,7 @@ const fetchListService = (function () {
 
   const fetchItemWeatherDetails = ({ lat, lng }) =>
     fetch(
-      `http://api.weatherstack.com/current?access_key=${API_KEY}&query=${lat},${lng}`
+      `https://api.weatherstack.com/current?access_key=${API_KEY}&query=${lat},${lng}`
     )
 
   const promisifiedGetGooglePlaceDetails = (googlePlaceId) =>

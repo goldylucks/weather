@@ -24,7 +24,10 @@
   "scripts": {
     "start": "react-app-rewired start",
     "start:prod": "serve -s build",
+    "prebuild": "rimraf build",
     "build": "react-app-rewired build",
+    "predeploy": "yarn build",
+    "deploy": "surge -p build -d weather-adam.surge.sh",
     "test": "react-app-rewired test --env=jsdom",
     "eject": "react-scripts eject"
   },
@@ -47,6 +50,8 @@
     "@babel/plugin-proposal-export-default-from": "^7.10.4",
     "customize-cra": "^1.0.0",
     "react-app-rewired": "^2.1.6",
-    "serve": "^11.3.2"
+    "rimraf": "^3.0.2",
+    "serve": "^11.3.2",
+    "surge": "^0.21.6"
   }
 }
