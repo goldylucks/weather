@@ -30,11 +30,13 @@ By default, the home page loads the 15 largest cities in the world by population
 
 ![home page default results](readme-images/home-page-default.png)
 
-Users can add cities to favorites and/or remove them from the display
+Clicking on a city from the list navigates to the details page of that city.
+
+Users can add cities to favorites and/or remove them from the display.
 
 ![home page actions](readme-images/home-page-actions.png)
 
-Users can remove cities from favorites
+Users can remove cities from favorites.
 
 ![remove city from favorites](readme-images/home-page-favorites.png)
 
@@ -54,7 +56,11 @@ Using the search bar in this page will open up a modal with the dynamic results.
 
 ### User location page
 
-Shows detailed information about the user's current location. Users will be prompted to grant the app permission to detect their location.
+Shows detailed information about the user's current location.
+
+![go to user location page](readme-images/goto-location-page.png)
+
+Users will be prompted to grant the app permission to detect their location.
 
 ![detect location prompt](readme-images/location-prompt.png)
 

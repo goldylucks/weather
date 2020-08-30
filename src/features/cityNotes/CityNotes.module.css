@@ -1,8 +1,8 @@
 .cityNote {
   display: flex;
   justify-content: space-between;
-  margin-top: 5px;
-  margin-bottom: 5px;
+  padding-top: 15px;
+  padding-bottom: 15px;
 }
 
 .noteActions {

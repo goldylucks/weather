@@ -29,7 +29,7 @@
     "cypress:open": "cypress open",
     "lint": "eslint src",
     "e2e": "cypress run",
-    "predeploy": "yarn build",
+    "predeploy": "yarn build && cd build && cp index.html 200.html",
     "deploy": "surge -p build -d weather-adam.surge.sh",
     "test": "react-app-rewired test --env=jsdom",
     "test:once": "cross-env CI=true react-app-rewired test --env=jsdom",

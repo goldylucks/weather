@@ -43,14 +43,16 @@ const SearchResultsModalForInnerPages = () => {
   return (
     <div className={styles.modal}>
       <Container>
-        <Cities title="Favorites" isFavorites cities={favoriteCities} />
-        {favoriteCities.length > 0 && <hr style={{ margin: 30 }} />}
-        {searchResults}
-        <FontAwesomeIcon
-          onClick={() => dispatch(setIsInnerPagesSearchModalOpen(false))}
-          icon={faTimes}
-          className={styles.close}
-        />
+        <div style={{ position: "relative" }}>
+          <Cities title="Favorites" isFavorites cities={favoriteCities} />
+          {favoriteCities.length > 0 && <hr style={{ margin: 30 }} />}
+          {searchResults}
+          <FontAwesomeIcon
+            onClick={() => dispatch(setIsInnerPagesSearchModalOpen(false))}
+            icon={faTimes}
+            className={styles.close}
+          />
+        </div>
       </Container>
     </div>
   )
