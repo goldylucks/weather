@@ -5,11 +5,12 @@
 .city {
   display: flex;
   justify-content: flex-start;
-  align-items: flex-start;
-  margin-bottom: 15px;
+  align-items: center;
+  padding-top: 7px;
+  padding-bottom: 7px;
 }
 
-@media screen and (max-width: 350px) {
+@media screen and (max-width: 500px) {
   .city {
     justify-content: space-between;
   }
