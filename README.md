@@ -1,68 +1,61 @@
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app), using the [Redux](https://redux.js.org/) and [Redux Toolkit](https://redux-toolkit.js.org/) template.
+# Real time weather app
 
-## Available Scripts
+This app allows users to look up current weather information for cities around the world and add cities to a “favorites” list.
 
-In the project directory, you can run:
+The search results display cities and their current temperatures, sorted alphabetically.
 
-### `yarn start`
+Clicking on a city from the list will navigate to a page with more information on that city.
 
-Runs the app in the development mode.<br />
-Open [http://localhost:3000](http://localhost:3000) to view it in the browser.
+Users can also click on the "my location" link to display information on their current location.
 
-The page will reload if you make edits.<br />
-You will also see any lint errors in the console.
+After initial loading, the app works offline with the latest data available from the previous session (Searching is disabled)
 
-### `yarn test`
+The app is fully responsive and supports mobiles, tablets and larger devices
 
-Launches the test runner in the interactive watch mode.<br />
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+---
 
-### `yarn build`
+## Pages
 
-Builds the app for production to the `build` folder.<br />
-It correctly bundles React in production mode and optimizes the build for the best performance.
+- [Home](#home-page)
+- [City details](#city-details-page)
+- [User location](#user-location-page)
 
-The build is minified and the filenames include the hashes.<br />
-Your app is ready to be deployed!
+### Home page
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
+Shows the latest search results of cities. Users can search for cities in the top bar and see the results dynamically change as they type.
 
-### `yarn eject`
+![dynamic search results](readme-images/home-page-dynamic-results.png)
 
-**Note: this is a one-way operation. Once you `eject`, you can’t go back!**
+By default, the home page loads the 15 largest cities in the world by population.
 
-If you aren’t satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
+![home page default results](readme-images/home-page-default.png)
 
-Instead, it will copy all the configuration files and the transitive dependencies (Webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you’re on your own.
+Users can add cities to favorites and/or remove them from the display
 
-You don’t have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn’t feel obligated to use this feature. However we understand that this tool wouldn’t be useful if you couldn’t customize it when you are ready for it.
+![home page actions](readme-images/home-page-actions.png)
 
-## Learn More
+Users can remove cities from favorites
 
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
+![remove city from favorites](readme-images/home-page-favorites.png)
 
-To learn React, check out the [React documentation](https://reactjs.org/).
+### City details page
 
-### Code Splitting
+Shows more details about the selected city, and allows creating notes and storing notes on the user's device.
 
-This section has moved here: https://facebook.github.io/create-react-app/docs/code-splitting
+![city page](readme-images/city-page-initial.png)
 
-### Analyzing the Bundle Size
+Notes can be edited and deleted as well.
 
-This section has moved here: https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size
+![city page notes](readme-images/city-page-notes.png)
 
-### Making a Progressive Web App
+Using the search bar in this page will open up a modal with the dynamic results. Pressing the Escape key twice or clicking the X button will close the modal. The modal behaves like the home page.
 
-This section has moved here: https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app
+![city page modal](readme-images/city-page-modal.png)
 
-### Advanced Configuration
+### User location page
 
-This section has moved here: https://facebook.github.io/create-react-app/docs/advanced-configuration
+Shows detailed information about the user's current location. Users will be prompted to grant the app permission to detect their location.
 
-### Deployment
+![detect location prompt](readme-images/location-prompt.png)
 
-This section has moved here: https://facebook.github.io/create-react-app/docs/deployment
-
-### `yarn build` fails to minify
-
-This section has moved here: https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify
+Other than that the page is the same as the city details page, it allows comments and search in the top bar

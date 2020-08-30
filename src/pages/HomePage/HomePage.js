@@ -13,6 +13,7 @@ const HomePage = () => {
   const favoriteCities = useSelector(selectFavorites)
   const nonFavoriteCities = useSelector(selectNonFavorites)
   const { listError, isFetchingList } = useSelector((state) => state.cities)
+  const { query } = useSelector((state) => state.search)
 
   let searchResults
   if (listError) {
@@ -22,7 +23,12 @@ const HomePage = () => {
   } else if (nonFavoriteCities.length === 0) {
     searchResults = <Container>No cities found</Container>
   } else {
-    searchResults = <Cities title="Search Results" cities={nonFavoriteCities} />
+    searchResults = (
+      <Cities
+        title={query ? "Search Results" : "Largest cities by population"}
+        cities={nonFavoriteCities}
+      />
+    )
   }
 
   return (
