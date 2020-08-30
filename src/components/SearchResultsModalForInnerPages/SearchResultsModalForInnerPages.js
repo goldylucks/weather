@@ -13,6 +13,7 @@ import styles from "./SearchResultsModalForInnerPages.module.css"
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome"
 import { faTimes } from "@fortawesome/free-solid-svg-icons"
 import { setIsInnerPagesSearchModalOpen } from "../../features/search/searchSlice"
+import useCloseSearchModalOnEscape from "../../hooks/useCloseSearchModalOnEscape"
 
 const SearchResultsModalForInnerPages = () => {
   const favoriteCities = useSelector(selectFavorites)
@@ -21,16 +22,7 @@ const SearchResultsModalForInnerPages = () => {
   const { isInnerPagesSearchModalOpen } = useSelector((state) => state.search)
   const dispatch = useDispatch()
 
-  const closeOnEscape = (evt) => {
-    if (evt.which === 27) {
-      dispatch(setIsInnerPagesSearchModalOpen(false))
-    }
-  }
-
-  useEffect(() => {
-    window.addEventListener("keydown", closeOnEscape)
-    return () => window.removeEventListener("keydown", closeOnEscape)
-  })
+  useCloseSearchModalOnEscape()
 
   if (!isInnerPagesSearchModalOpen) {
     return null
