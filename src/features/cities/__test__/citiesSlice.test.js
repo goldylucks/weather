@@ -2,6 +2,8 @@ import citiesReducer, {
   toggleFavorite,
   removeCity,
   fetchList,
+  selectFavorites,
+  selectNonFavorites,
 } from "../citiesSlice"
 
 describe("citiesReducer", () => {
@@ -62,6 +64,59 @@ describe("citiesReducer", () => {
         favoritesIds: [id],
       })
     })
-    // it('fulfilled')
+    it(".fulfilled -> should add results to the list, except for favorites ones", () => {
+      // given
+      const id = 1
+      const idToAdd = 2
+      const state = {
+        list: [{ id }],
+        favoritesIds: [id],
+      }
+      // when
+      const result = citiesReducer(state, {
+        type: fetchList.fulfilled,
+        payload: [{ id }, { id: idToAdd }],
+      })
+      // then
+      expect(result).toEqual({
+        isFetchingList: false,
+        list: [{ id: idToAdd }, { id }],
+        favoritesIds: [id],
+      })
+    })
+  })
+  describe("selectFavorites", () => {
+    it("should select only favorites", () => {
+      // given
+      const id = 1
+      const nonFavId = 2
+      const state = {
+        cities: {
+          list: [{ id }, { id: nonFavId }],
+          favoritesIds: [id],
+        },
+      }
+      // when
+      const result = selectFavorites(state)
+      // then
+      expect(result).toEqual([{ id }])
+    })
+  })
+  describe("selectNonFavorites", () => {
+    it("should select only favorites", () => {
+      // given
+      const id = 1
+      const nonFavId = 2
+      const state = {
+        cities: {
+          list: [{ id }, { id: nonFavId }],
+          favoritesIds: [id],
+        },
+      }
+      // when
+      const result = selectNonFavorites(state)
+      // then
+      expect(result).toEqual([{ id: nonFavId }])
+    })
   })
 })
