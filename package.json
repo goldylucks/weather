@@ -32,18 +32,18 @@
     "predeploy": "yarn build",
     "deploy": "surge -p build -d weather-adam.surge.sh",
     "test": "react-app-rewired test --env=jsdom",
+    "test:once": "cross-env CI=true react-app-rewired test --env=jsdom",
     "eject": "react-scripts eject"
   },
   "husky": {
     "hooks": {
       "pre-commit": "lint-staged",
-      "pre-push": "yarn lint && yarn test"
+      "pre-push": "yarn lint && yarn test:once"
     }
   },
   "lint-staged": {
     "*.js": [
-      "eslint --fix",
-      "git add"
+      "eslint --fix"
     ]
   },
   "browserslist": {
@@ -60,6 +60,7 @@
   },
   "devDependencies": {
     "@babel/plugin-proposal-export-default-from": "^7.10.4",
+    "cross-env": "^7.0.2",
     "customize-cra": "^1.0.0",
     "cypress": "^5.0.0",
     "eslint-plugin-cypress": "^2.11.1",
