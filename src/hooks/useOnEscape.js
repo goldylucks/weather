@@ -2,7 +2,6 @@ import { useEffect } from "react"
 
 const useOnEscape = (fn) => {
   const onEscape = (evt) => {
-    console.log(evt)
     if (evt.which === 27) {
       fn()
     }
