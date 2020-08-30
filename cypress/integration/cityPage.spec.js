@@ -1,5 +1,5 @@
 context("cityPage", () => {
-  beforeEach(() => {
+  before(() => {
     const beijingId = "ChIJuSwU55ZS8DURiqkPryBWYrk"
     cy.visit("http://localhost:3000/city/" + beijingId)
   })
@@ -10,46 +10,38 @@ context("cityPage", () => {
     cy.contains("Humidity")
   })
 
+  // WARNING these tests rely on each other and must be kept
+  // in the current order. this is very bad practice but calling
+  // cy.visit before each test persists the data from the previous
+  // test, leading to inconsistencies
   describe("notes", () => {
-    beforeEach(() => {
-      const beijingId = "ChIJuSwU55ZS8DURiqkPryBWYrk"
-      cy.visit("http://localhost:3000/city/" + beijingId)
-    })
+    const noteText = "My note"
+    const addedText = " more text"
     it("should add a note", () => {
-      const noteText = "My note"
       cy.get("textarea").type(noteText)
       cy.contains("Add note").click()
       cy.get("textarea").should("have.value", "")
       cy.contains(noteText)
     })
 
-    it("should edit a note", () => {
-      const noteText = "My note"
-      const addedText = " more text"
-      cy.get("textarea").type(noteText)
-      cy.contains("Add note").click()
-      cy.get(".fa-edit").click()
-      cy.get("textarea").first().should("have.value", noteText)
-      cy.get("textarea").first().type(addedText)
-      cy.contains("Confirm").click()
-      cy.contains(noteText + addedText)
-    })
-
     it("should discard edit of a note", () => {
-      const noteText = "My note"
-      const addedText = " some text here"
-      cy.get("textarea").type(noteText)
-      cy.contains("Add note").click()
       cy.get(".fa-edit").click()
       cy.get("textarea").first().type(addedText)
       cy.contains("Cancel").click()
       cy.contains(noteText + addedText).should("not.exist")
     })
 
+    it("should edit a note", () => {
+      cy.get(".fa-edit").click()
+      cy.get("textarea")
+        .first()
+        .should("have.value", noteText + addedText)
+      cy.get("textarea").first().type(addedText)
+      cy.contains("Confirm").click()
+      cy.contains(noteText + addedText + addedText)
+    })
+
     it("should delete a note", () => {
-      const noteText = "My note"
-      cy.get("textarea").type(noteText)
-      cy.contains("Add note").click()
       cy.get(".fa-trash-alt").click()
       cy.contains(noteText).should("not.exist")
     })
