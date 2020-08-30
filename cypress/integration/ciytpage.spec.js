@@ -1,6 +1,5 @@
 context("citypage", () => {
   beforeEach(() => {
-    cy.log(localStorage.getItem("weather-app"))
     const beijingId = "ChIJuSwU55ZS8DURiqkPryBWYrk"
     cy.visit("http://localhost:3000/city/" + beijingId)
   })
@@ -63,6 +62,17 @@ context("citypage", () => {
     it("should close the modal on clicking the X", () => {
       cy.get("[class*=topbar] input").focus()
       cy.get("[class*=modal] .fa-times").click()
+      cy.get("[class*=modal]").should("not.exist")
+    })
+
+    it("should close the modal on pressing esc", () => {
+      cy.get("[class*=topbar] input").focus()
+      cy.get("[class*=modal]").trigger("keydown", { keyCode: 27, which: 27 })
+      // in the real app the first esc key will only blur the input
+      // and won't be caught in the event listener, but in cypress
+      // seems like one is enough to close the modal, probably
+      // because cy.get() removes the focus from the input
+      // cy.get("[class*=modal]").trigger("keydown", { keyCode: 27, which: 27 })
       cy.get("[class*=modal]").should("not.exist")
     })
   })
