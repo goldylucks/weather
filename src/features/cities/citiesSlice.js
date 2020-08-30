@@ -42,14 +42,13 @@ const citiesSlice = createSlice({
       const id = action.payload
       state.list = state.list.filter((item) => item.id !== id)
       if (state.favoritesIds.includes(id)) {
-        state.favoritesIds = state.favoritesIds.filter((item) => item.id !== id)
+        state.favoritesIds = state.favoritesIds.filter((fid) => fid !== id)
       }
     },
     toggleFavorite: (state, action) => {
       const id = action.payload
       if (state.favoritesIds.includes(id)) {
         state.favoritesIds = state.favoritesIds.filter((fid) => fid !== id)
-        return state
       } else {
         state.favoritesIds.push(id)
       }
