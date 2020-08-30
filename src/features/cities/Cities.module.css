@@ -2,7 +2,15 @@
   margin-bottom: 20px;
 }
 
+@keyframes enter-city {
+  from {
+    opacity: 0;
+    transform: translateY(-50px);
+  }
+}
+
 .city {
+  animation: enter-city 0.6s ease-in;
   display: flex;
   justify-content: flex-start;
   align-items: center;

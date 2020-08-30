@@ -15,27 +15,24 @@ const HomePage = () => {
   const { listError, isFetchingList } = useSelector((state) => state.cities)
   const { query } = useSelector((state) => state.search)
 
-  let searchResults
-  if (listError) {
-    searchResults = <Container>{listError}</Container>
-  } else if (isFetchingList) {
-    searchResults = <Spinner />
+  let inner
+  if (isFetchingList) {
+    inner = <Spinner />
+  } else if (listError) {
+    inner = listError
   } else if (nonFavoriteCities.length === 0) {
-    searchResults = <Container>No cities found</Container>
-  } else {
-    searchResults = (
-      <Cities
-        title={query ? "Search Results" : "Largest cities by population"}
-        cities={nonFavoriteCities}
-      />
-    )
+    inner = "No cities found"
   }
 
   return (
     <Container>
       <Cities title="Favorites" isFavorites cities={favoriteCities} />
       {favoriteCities.length > 0 && <hr style={{ margin: 30 }} />}
-      {searchResults}
+      <Cities
+        title={query ? "Search Results" : "Largest cities by population"}
+        cities={nonFavoriteCities}
+      />
+      {inner}
     </Container>
   )
 }

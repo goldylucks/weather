@@ -44,13 +44,9 @@ const Cities = ({ cities, title, isFavorites }) => {
     </div>
   )
 
-  if (cities.length === 0) {
-    return null
-  }
-
   return (
     <div>
-      {title && <h3 className={styles.title}>{title}</h3>}
+      <h3 className={styles.title}>{title}</h3>
       {cities.map(renderCity)}
     </div>
   )
@@ -66,7 +62,7 @@ Cities.propTypes = {
       current: PropTypes.shape({
         temperature: PropTypes.number.isRequired,
       }).isRequired,
-    })
+    }).isRequired
   ).isRequired,
 }
 
