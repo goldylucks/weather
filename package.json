@@ -27,11 +27,24 @@
     "prebuild": "rimraf build",
     "build": "react-app-rewired build",
     "cypress:open": "cypress open",
+    "lint": "eslint src",
     "e2e": "cypress run",
     "predeploy": "yarn build",
     "deploy": "surge -p build -d weather-adam.surge.sh",
     "test": "react-app-rewired test --env=jsdom",
     "eject": "react-scripts eject"
+  },
+  "husky": {
+    "hooks": {
+      "pre-commit": "lint-staged",
+      "pre-push": "yarn lint && yarn test"
+    }
+  },
+  "lint-staged": {
+    "*.js": [
+      "eslint --fix",
+      "git add"
+    ]
   },
   "browserslist": {
     "production": [
@@ -50,6 +63,8 @@
     "customize-cra": "^1.0.0",
     "cypress": "^5.0.0",
     "eslint-plugin-cypress": "^2.11.1",
+    "husky": "^4.2.5",
+    "lint-staged": "^10.2.13",
     "react-app-rewired": "^2.1.6",
     "rimraf": "^3.0.2",
     "serve": "^11.3.2",
