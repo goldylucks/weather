@@ -1,4 +1,4 @@
-context("citypage", () => {
+context("cityPage", () => {
   beforeEach(() => {
     const beijingId = "ChIJuSwU55ZS8DURiqkPryBWYrk"
     cy.visit("http://localhost:3000/city/" + beijingId)
@@ -11,6 +11,10 @@ context("citypage", () => {
   })
 
   describe("notes", () => {
+    beforeEach(() => {
+      const beijingId = "ChIJuSwU55ZS8DURiqkPryBWYrk"
+      cy.visit("http://localhost:3000/city/" + beijingId)
+    })
     it("should add a note", () => {
       const noteText = "My note"
       cy.get("textarea").type(noteText)
@@ -74,6 +78,9 @@ context("citypage", () => {
       // because cy.get() removes the focus from the input
       // cy.get("[class*=modal]").trigger("keydown", { keyCode: 27, which: 27 })
       cy.get("[class*=modal]").should("not.exist")
+      cy.mockGeolocation()
+      cy.contains("My").click()
+      cy.url().should("include", "/user-location") // => true
     })
   })
 })
