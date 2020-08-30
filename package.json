@@ -26,13 +26,12 @@
     "start:prod": "serve -s build",
     "prebuild": "rimraf build",
     "build": "react-app-rewired build",
+    "cypress:open": "cypress open",
+    "e2e": "cypress run",
     "predeploy": "yarn build",
     "deploy": "surge -p build -d weather-adam.surge.sh",
     "test": "react-app-rewired test --env=jsdom",
     "eject": "react-scripts eject"
-  },
-  "eslintConfig": {
-    "extends": "react-app"
   },
   "browserslist": {
     "production": [
@@ -49,6 +48,8 @@
   "devDependencies": {
     "@babel/plugin-proposal-export-default-from": "^7.10.4",
     "customize-cra": "^1.0.0",
+    "cypress": "^5.0.0",
+    "eslint-plugin-cypress": "^2.11.1",
     "react-app-rewired": "^2.1.6",
     "rimraf": "^3.0.2",
     "serve": "^11.3.2",

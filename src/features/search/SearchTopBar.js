@@ -53,7 +53,7 @@ const SearchTopBar = () => {
               onFocus={handleFocus}
               value={query}
               onChange={handleChange}
-              placeholder="Search cities"
+              placeholder="Search weather by city"
               className={styles.input}
             />
           ) : (

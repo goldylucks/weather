@@ -14,8 +14,9 @@ const CityPage = ({ cityId }) => {
   const city = useSelector(
     (state) =>
       state.cities.list.find((city) => city.id === cityId) ||
-      (Object.keys(state.cities.cityDetails).length !== 0 &&
-        state.cities.cityDetails)
+      // if city is not in list, check if it's in city details
+      // this happens when opening a direct link to a city
+      (state.cities.cityDetails.name && state.cities.cityDetails)
   )
 
   useEffect(() => {
