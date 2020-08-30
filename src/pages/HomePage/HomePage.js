@@ -7,6 +7,7 @@ import {
   selectNonFavorites,
 } from "../../features/cities/citiesSlice"
 import Container from "../../components/Container"
+import Spinner from "../../components/Spinner"
 
 const HomePage = () => {
   const favoriteCities = useSelector(selectFavorites)
@@ -17,7 +18,7 @@ const HomePage = () => {
   if (listError) {
     searchResults = <Container>{listError}</Container>
   } else if (isFetchingList) {
-    searchResults = <Container>Loading ...</Container>
+    searchResults = <Spinner />
   } else if (nonFavoriteCities.length === 0) {
     searchResults = <Container>No cities found</Container>
   } else {

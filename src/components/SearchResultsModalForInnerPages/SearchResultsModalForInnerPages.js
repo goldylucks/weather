@@ -1,7 +1,8 @@
-import React, { useEffect } from "react"
+import React from "react"
 import { useSelector, useDispatch } from "react-redux"
 
 import Cities from "../../features/cities/Cities"
+import Spinner from "../Spinner"
 import {
   selectFavorites,
   selectNonFavorites,
@@ -32,7 +33,7 @@ const SearchResultsModalForInnerPages = () => {
   if (listError) {
     searchResults = <Container>{listError}</Container>
   } else if (isFetchingList) {
-    searchResults = <Container>Loading ...</Container>
+    searchResults = <Spinner />
   } else if (nonFavoriteCities.length === 0) {
     searchResults = <Container>No cities found</Container>
   } else {

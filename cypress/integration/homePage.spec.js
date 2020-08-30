@@ -7,8 +7,8 @@ context("homePage", () => {
     cy.get("[class*=topbar]").should("be.visible")
   })
 
-  it("should display initial loading message", () => {
-    cy.contains("Loading ...")
+  it("should display initial spinner", () => {
+    cy.get("[class*=spinner]")
   })
 
   it("should display default cities", () => {
@@ -34,7 +34,7 @@ context("homePage", () => {
     cy.get(".fa-heart").first().click()
     cy.get("[class*=topbar] input").type("a")
     cy.contains("Beijing")
-    cy.contains("Loading")
+    cy.get("[class*=spinner]")
     cy.contains("Amsterdam")
   })
 
@@ -46,14 +46,14 @@ context("homePage", () => {
 
   it("should navigate to Buenos Aires page without loading", () => {
     cy.contains("Buenos Aires").click()
-    cy.contains("Loading ...").should("not.exist")
+    cy.get("[class*=spinner]").should("not.exist")
     cy.contains("Buenos Aires")
   })
 
   it("should navigate to user location page", () => {
     cy.mockGeolocation()
     cy.contains("My").click()
-    cy.contains("Loading ...")
+    cy.get("[class*=spinner]")
     cy.contains("Hays City, United States of America")
   })
 })

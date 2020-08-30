@@ -7,6 +7,7 @@ import CityNotes from "../../features/cityNotes/CityNotes"
 import AddCityNote from "../../features/cityNotes/AddCityNote"
 import WeatherDetails from "../../components/WeatherDetails"
 import BackToList from "../../components/BackToList"
+import Spinner from "../../components/Spinner"
 
 const CityPage = ({ cityId }) => {
   const dispatch = useDispatch()
@@ -30,7 +31,7 @@ const CityPage = ({ cityId }) => {
   }
 
   if (isFetchingItem || !city) {
-    return <Container>Loading ...</Container>
+    return <Spinner />
   }
 
   return (

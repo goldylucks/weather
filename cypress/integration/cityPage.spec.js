@@ -52,7 +52,7 @@ context("cityPage", () => {
       cy.get("[class*=topbar] input").focus()
       cy.get("[class*=modal]")
       cy.contains("Beijing")
-      cy.contains("Loading").should("not.exist")
+      cy.get("[class*=spinner]").should("not.exist")
     })
 
     it("should close the modal on clicking the X", () => {

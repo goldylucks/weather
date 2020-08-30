@@ -1,0 +1,14 @@
+@keyframes spin {
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+.spinner {
+  transform: rotate(0deg);
+  opacity: 0.5;
+  animation: spin infinite 2s;
+  font-size: 48px;
+  margin: 20px auto;
+  display: block;
+}

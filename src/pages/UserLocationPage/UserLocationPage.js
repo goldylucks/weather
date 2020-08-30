@@ -4,6 +4,7 @@ import useIsOnline from "../../hooks/useIsOnline"
 import Container from "../../components/Container"
 import WeatherDetails from "../../components/WeatherDetails"
 import BackToList from "../../components/BackToList"
+import Spinner from "../../components/Spinner"
 import CityNotes from "../../features/cityNotes/CityNotes"
 import AddCityNote from "../../features/cityNotes/AddCityNote"
 import { useSelector, useDispatch } from "react-redux"
@@ -93,7 +94,7 @@ const UserLocationPage = () => {
   }
 
   if (isFetching || isInitialRender || !name) {
-    return <Container>Loading ...</Container>
+    return <Spinner />
   }
 
   if (!lat) {
