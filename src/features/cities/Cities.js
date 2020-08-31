@@ -44,6 +44,10 @@ const Cities = ({ cities, title, isFavorites }) => {
     </div>
   )
 
+  if (isFavorites && cities.length === 0) {
+    return null
+  }
+
   return (
     <div>
       <h3 className={styles.title}>{title}</h3>
