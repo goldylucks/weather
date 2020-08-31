@@ -12,6 +12,8 @@ import "./App.css"
 import OfflineBar from "./components/OfflineBar/OfflineBar"
 import useIsOnline from "./hooks/useIsOnline"
 
+const foo = "bar"
+
 function App() {
   const isOnline = useIsOnline()
   return (
