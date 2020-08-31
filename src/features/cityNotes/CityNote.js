@@ -14,6 +14,7 @@ import {
   cancelEdit,
   remove,
 } from "./cityNotesSlice"
+import EditCityNote from "./EditCityNote"
 
 const CityNote = ({ listId, id, text, isEditing, editingText }) => {
   const dispatch = useDispatch()
@@ -38,30 +39,7 @@ const CityNote = ({ listId, id, text, isEditing, editingText }) => {
     dispatch(remove({ listId, id }))
   }
 
-  if (isEditing) {
-    return (
-      <div>
-        <textarea
-          onChange={handleChange}
-          placeholder="Write note here"
-          value={editingText}
-          className="textarea"
-        />
-        <button
-          style={{ marginRight: 10 }}
-          onClick={handleConfirmEdit}
-          className="button"
-        >
-          Confirm
-        </button>
-        <button onClick={handleCancelEdit} className="button">
-          Cancel
-        </button>
-      </div>
-    )
-  }
-
-  return (
+  const note = (
     <li className={styles.cityNote}>
       <p>{text}</p>
       <div
@@ -79,6 +57,21 @@ const CityNote = ({ listId, id, text, isEditing, editingText }) => {
         />
       </div>
     </li>
+  )
+
+  return (
+    <div className={styles.container}>
+      {isEditing ? (
+        <EditCityNote
+          editingText={editingText}
+          onChange={handleChange}
+          onConfirm={handleConfirmEdit}
+          onCancel={handleCancelEdit}
+        />
+      ) : (
+        note
+      )}
+    </div>
   )
 }
 
