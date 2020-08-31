@@ -25,15 +25,17 @@ const HomePage = () => {
   }
 
   return (
-    <Container>
-      <Cities title="Favorites" isFavorites cities={favoriteCities} />
-      {favoriteCities.length > 0 && <hr style={{ margin: 30 }} />}
-      <Cities
-        title={query ? "Search Results" : "Largest cities by population"}
-        cities={nonFavoriteCities}
-      />
-      {inner}
-    </Container>
+    <div className="page">
+      <Container>
+        <Cities title="Favorites" isFavorites cities={favoriteCities} />
+        {favoriteCities.length > 0 && <hr style={{ margin: 30 }} />}
+        <Cities
+          title={query ? "Search Results" : "Largest cities by population"}
+          cities={nonFavoriteCities}
+        />
+        {inner}
+      </Container>
+    </div>
   )
 }
 

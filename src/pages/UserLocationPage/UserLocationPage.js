@@ -61,7 +61,7 @@ const UserLocationPage = () => {
   }
 
   const contents = (
-    <div>
+    <div className="page">
       <BackToList />
       <Container>
         <h1 style={{ marginBottom: 10 }}>{name}</h1>

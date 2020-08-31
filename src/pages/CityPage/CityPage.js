@@ -35,7 +35,7 @@ const CityPage = ({ cityId }) => {
   }
 
   return (
-    <div>
+    <div className="page">
       <BackToList />
       <Container>
         <h1 style={{ marginBottom: 10 }}>{city.name}</h1>
