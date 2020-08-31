@@ -32,12 +32,31 @@ a {
   outline: none;
   border: none;
   resize: none;
-  box-shadow: 0 0 4px 0px inset #d3d3d3;
+  box-shadow: 0 0 6px 0px inset #d3d3d3;
   padding: 10px;
+  border: 1px solid #d3d3d3;
   border-radius: 6px;
   overflow: hidden;
   margin-bottom: 10px;
   height: 90px;
+}
+
+@keyframes textarea-highlight {
+  0% {
+    box-shadow: 0 0 6px 0px inset #d3d3d3;
+  }
+  50% {
+    box-shadow: none;
+  }
+  100% {
+    box-shadow: 0 0 6px 0px #d3d3d3;
+  }
+}
+
+.textarea:hover,
+.textarea:focus {
+  box-shadow: 0 0 6px 0px #d3d3d3;
+  animation: textarea-highlight 0.3s;
 }
 
 .button {
