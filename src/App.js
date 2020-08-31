@@ -9,10 +9,8 @@ import CityPage from "./pages/CityPage"
 import UserLocationPage from "./pages/UserLocationPage"
 import SearchResultsModalForInnerPages from "./components/SearchResultsModalForInnerPages"
 import "./App.css"
-import OfflineBar from "./components/OfflineBar/OfflineBar"
+import OfflineBar from "./components/OfflineBar"
 import useIsOnline from "./hooks/useIsOnline"
-
-const foo = "bar"
 
 function App() {
   const isOnline = useIsOnline()
