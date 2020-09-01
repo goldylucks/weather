@@ -1,4 +1,4 @@
-import React from "react"
+import React, { useRef, useEffect, useState } from "react"
 import { faEdit } from "@fortawesome/free-regular-svg-icons"
 import PropTypes from "prop-types"
 import { faTrashAlt } from "@fortawesome/free-solid-svg-icons"
@@ -15,8 +15,15 @@ import {
   remove,
 } from "./cityNotesSlice"
 import EditCityNote from "./EditCityNote"
+import useSetHeight from "../../hooks/useSetHeight"
 
 const CityNote = ({ listId, id, text, isEditing, editingText }) => {
+  const containerEl = useRef(null)
+  const containerHeight = useSetHeight({
+    dependencies: [isEditing],
+    ref: containerEl,
+  })
+
   const dispatch = useDispatch()
 
   const handleChange = (evt) => {
@@ -60,7 +67,11 @@ const CityNote = ({ listId, id, text, isEditing, editingText }) => {
   )
 
   return (
-    <div className={styles.container}>
+    <div
+      className={styles.cityNoteContainer}
+      ref={containerEl}
+      style={{ height: containerHeight }}
+    >
       {isEditing ? (
         <EditCityNote
           editingText={editingText}

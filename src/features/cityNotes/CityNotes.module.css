@@ -28,3 +28,8 @@
   opacity: 1;
   transition: 0.6s opacity;
 }
+
+.cityNoteContainer {
+  transition: height 0.6s;
+  overflow: hidden;
+}
