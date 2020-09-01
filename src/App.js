@@ -20,7 +20,7 @@ function App() {
       <Location>
         {({ location }) => (
           <TransitionGroup className="transition-group">
-            <CSSTransition key={location.key} timeout={150} classNames="fade">
+            <CSSTransition key={location.key} timeout={5000} classNames="fade">
               <Router location={location} className="router">
                 <HomePage path="/" className="page" />
                 <CityPage path="/city/:cityId" className="page" />

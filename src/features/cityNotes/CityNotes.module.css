@@ -29,6 +29,15 @@
   transition: 0.6s opacity;
 }
 
+@keyframes enter-city-note {
+  from {
+    height: 0;
+  }
+  to {
+    height: 20px;
+  }
+}
+
 .cityNoteContainer {
   transition: height 0.6s;
   overflow: hidden;

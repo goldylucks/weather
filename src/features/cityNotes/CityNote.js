@@ -1,4 +1,4 @@
-import React, { useRef, useEffect, useState } from "react"
+import React, { useRef } from "react"
 import { faEdit } from "@fortawesome/free-regular-svg-icons"
 import PropTypes from "prop-types"
 import { faTrashAlt } from "@fortawesome/free-solid-svg-icons"
