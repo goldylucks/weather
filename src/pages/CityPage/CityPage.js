@@ -2,14 +2,19 @@ import React, { useEffect } from "react"
 import PropTypes from "prop-types"
 import Container from "../../components/Container"
 import { useSelector, useDispatch } from "react-redux"
-import { fetchItem } from "../../features/cities/citiesSlice"
+import { faHeart } from "@fortawesome/free-regular-svg-icons"
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome"
+
+import { fetchItem, toggleFavorite } from "../../features/cities/citiesSlice"
 import CityNotes from "../../features/cityNotes/CityNotes"
 import AddCityNote from "../../features/cityNotes/AddCityNote"
 import WeatherDetails from "../../components/WeatherDetails"
 import BackToList from "../../components/BackToList"
 import Spinner from "../../components/Spinner"
+import useIsCityInFavorites from "../../hooks/useIsCityInFavorites"
 
 const CityPage = ({ cityId }) => {
+  const isCityInFavorites = useIsCityInFavorites()
   const dispatch = useDispatch()
   const { isFetchingCity, fetchingCityError } = useSelector(
     (state) => state.cities
@@ -40,7 +45,26 @@ const CityPage = ({ cityId }) => {
     <div className="page">
       <BackToList />
       <Container>
-        <h1 style={{ marginBottom: 10 }}>{city.name}</h1>
+        <div
+          style={{
+            marginBottom: 10,
+            display: "flex",
+            justifyContent: "space-between",
+            alignItems: "center",
+          }}
+        >
+          <h1>{city.name}</h1>
+          <FontAwesomeIcon
+            onClick={() => dispatch(toggleFavorite(city.id))}
+            icon={faHeart}
+            style={{
+              cursor: "pointer",
+              color: isCityInFavorites(city.id) ? "#f7002b" : "inherit",
+              fontSize: 24,
+              transition: "color 0.6s",
+            }}
+          />
+        </div>
         <WeatherDetails {...city.current} />
         <h3 style={{ marginTop: 20, marginBottom: 10 }}>Notes</h3>
         <div style={{ marginBottom: 20 }}>

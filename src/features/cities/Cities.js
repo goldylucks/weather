@@ -15,11 +15,12 @@ import styles from "./Cities.module.css"
 import { useDispatch, useSelector } from "react-redux"
 import { navigate } from "@reach/router"
 import { setIsInnerPagesSearchModalOpen } from "../search/searchSlice"
+import useIsCityInFavorites from "../../hooks/useIsCityInFavorites"
 
 const Cities = ({ cities, title, isFavorites }) => {
+  const isCityInFavorites = useIsCityInFavorites()
   const dispatch = useDispatch()
   const { isInnerPagesSearchModalOpen } = useSelector((state) => state.search)
-  const { favorites } = useSelector((state) => state.cities)
 
   const handleClick = (cityId) => {
     if (isInnerPagesSearchModalOpen) {
@@ -27,8 +28,6 @@ const Cities = ({ cities, title, isFavorites }) => {
     }
     navigate(`/city/${cityId}`)
   }
-
-  const isCityInFavorites = (id) => !!favorites.find((city) => city.id === id)
 
   const renderCity = (city) => (
     <div key={city.id} className={styles.city}>
