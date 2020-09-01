@@ -2,36 +2,35 @@ import React from "react"
 
 import Cities from "../../features/cities/Cities"
 import { useSelector } from "react-redux"
-import {
-  selectFavorites,
-  selectNonFavorites,
-} from "../../features/cities/citiesSlice"
 import Container from "../../components/Container"
 import Spinner from "../../components/Spinner"
 
 const HomePage = () => {
-  const favoriteCities = useSelector(selectFavorites)
-  const nonFavoriteCities = useSelector(selectNonFavorites)
-  const { listError, isFetchingList } = useSelector((state) => state.cities)
+  const {
+    favorites,
+    searchResults,
+    isFetchingSearchResults,
+    searchResultsError,
+  } = useSelector((state) => state.cities)
   const { query } = useSelector((state) => state.search)
 
   let inner
-  if (isFetchingList) {
+  if (isFetchingSearchResults) {
     inner = <Spinner />
-  } else if (listError) {
-    inner = listError
-  } else if (nonFavoriteCities.length === 0) {
+  } else if (searchResultsError) {
+    inner = searchResultsError
+  } else if (searchResults.length === 0) {
     inner = "No cities found"
   }
 
   return (
     <div className="page">
       <Container>
-        <Cities title="Favorites" isFavorites cities={favoriteCities} />
-        {favoriteCities.length > 0 && <hr style={{ margin: 30 }} />}
+        <Cities title="Favorites" isFavorites cities={favorites} />
+        {favorites.length > 0 && <hr style={{ margin: 30 }} />}
         <Cities
           title={query ? "Search Results" : "Largest cities by population"}
-          cities={nonFavoriteCities}
+          cities={searchResults}
         />
         {inner}
       </Container>

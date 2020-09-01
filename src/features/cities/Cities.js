@@ -3,9 +3,14 @@ import { faTrashAlt, faHeart } from "@fortawesome/free-regular-svg-icons"
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome"
 import PropTypes from "prop-types"
 import cx from "classnames"
+import sortBy from "lodash.sortby"
 
 import { IS_MOBILE } from "../../constants/mobile"
-import { removeCity, toggleFavorite } from "./citiesSlice"
+import {
+  removeFavorite,
+  removeSearchResult,
+  toggleFavorite,
+} from "./citiesSlice"
 import styles from "./Cities.module.css"
 import { useDispatch, useSelector } from "react-redux"
 import { navigate } from "@reach/router"
@@ -14,6 +19,7 @@ import { setIsInnerPagesSearchModalOpen } from "../search/searchSlice"
 const Cities = ({ cities, title, isFavorites }) => {
   const dispatch = useDispatch()
   const { isInnerPagesSearchModalOpen } = useSelector((state) => state.search)
+  const { favorites } = useSelector((state) => state.cities)
 
   const handleClick = (cityId) => {
     if (isInnerPagesSearchModalOpen) {
@@ -21,6 +27,8 @@ const Cities = ({ cities, title, isFavorites }) => {
     }
     navigate(`/city/${cityId}`)
   }
+
+  const isCityInFavorites = (id) => !!favorites.find((city) => city.id === id)
 
   const renderCity = (city) => (
     <div key={city.id} className={styles.city}>
@@ -34,10 +42,16 @@ const Cities = ({ cities, title, isFavorites }) => {
         <FontAwesomeIcon
           onClick={() => dispatch(toggleFavorite(city.id))}
           icon={faHeart}
-          style={{ color: isFavorites ? "#f7002b" : "inherit" }}
+          style={{ color: isCityInFavorites(city.id) ? "#f7002b" : "inherit" }}
         />
         <FontAwesomeIcon
-          onClick={() => dispatch(removeCity(city.id))}
+          onClick={() =>
+            dispatch(
+              isFavorites
+                ? removeFavorite(city.id)
+                : removeSearchResult(city.id)
+            )
+          }
           icon={faTrashAlt}
         />
       </div>
@@ -51,7 +65,7 @@ const Cities = ({ cities, title, isFavorites }) => {
   return (
     <div>
       <h3 className={styles.title}>{title}</h3>
-      {cities.map(renderCity)}
+      {sortBy(cities, ["name"]).map(renderCity)}
     </div>
   )
 }

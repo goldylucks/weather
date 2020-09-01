@@ -3,10 +3,6 @@ import { useSelector, useDispatch } from "react-redux"
 
 import Cities from "../../features/cities/Cities"
 import Spinner from "../Spinner"
-import {
-  selectFavorites,
-  selectNonFavorites,
-} from "../../features/cities/citiesSlice"
 
 import Container from "../Container"
 
@@ -17,10 +13,15 @@ import { setIsInnerPagesSearchModalOpen } from "../../features/search/searchSlic
 import useCloseSearchModalOnEscape from "../../hooks/useCloseSearchModalOnEscape"
 
 const SearchResultsModalForInnerPages = () => {
-  const favoriteCities = useSelector(selectFavorites)
-  const nonFavoriteCities = useSelector(selectNonFavorites)
-  const { listError, isFetchingList } = useSelector((state) => state.cities)
-  const { isInnerPagesSearchModalOpen } = useSelector((state) => state.search)
+  const {
+    favorites,
+    searchResults,
+    isFetchingSearchResults,
+    searchResultsError,
+  } = useSelector((state) => state.cities)
+  const { isInnerPagesSearchModalOpen, query } = useSelector(
+    (state) => state.search
+  )
   const dispatch = useDispatch()
 
   useCloseSearchModalOnEscape()
@@ -29,30 +30,32 @@ const SearchResultsModalForInnerPages = () => {
     return null
   }
 
-  let searchResults
-  if (listError) {
-    searchResults = <Container>{listError}</Container>
-  } else if (isFetchingList) {
-    searchResults = <Spinner />
-  } else if (nonFavoriteCities.length === 0) {
-    searchResults = <Container>No cities found</Container>
-  } else {
-    searchResults = <Cities title="Search Results" cities={nonFavoriteCities} />
+  let inner
+  if (isFetchingSearchResults) {
+    inner = <Spinner />
+  } else if (searchResultsError) {
+    inner = searchResultsError
+  } else if (searchResults.length === 0) {
+    inner = "No cities found"
   }
 
   return (
     <div className={styles.modal}>
       <Container>
         <div style={{ position: "relative" }}>
-          <Cities title="Favorites" isFavorites cities={favoriteCities} />
-          {favoriteCities.length > 0 && <hr style={{ margin: 30 }} />}
-          {searchResults}
           <FontAwesomeIcon
             onClick={() => dispatch(setIsInnerPagesSearchModalOpen(false))}
             icon={faTimes}
             className={styles.close}
           />
         </div>
+        <Cities title="Favorites" isFavorites cities={favorites} />
+        {favorites.length > 0 && <hr style={{ margin: 30 }} />}
+        <Cities
+          title={query ? "Search Results" : "Largest cities by population"}
+          cities={searchResults}
+        />
+        {inner}
       </Container>
     </div>
   )

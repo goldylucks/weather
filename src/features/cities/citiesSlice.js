@@ -1,4 +1,4 @@
-import { createSlice, createAsyncThunk, createSelector } from "@reduxjs/toolkit"
+import { createSlice, createAsyncThunk } from "@reduxjs/toolkit"
 
 import fetchCitiesService from "../../services/fetchCitiesService"
 
@@ -29,97 +29,66 @@ export const fetchItem = createAsyncThunk("cities/fetchItem", async (id) => {
 const citiesSlice = createSlice({
   name: "cities",
   initialState: {
-    list: [],
-    favoritesIds: [],
+    favorites: [],
+    searchResults: [],
+    isFetchingSearchResults: false,
+    searchResultsError: "",
     cityDetails: {},
-    isFetchingList: false,
-    isFetchingItem: false,
-    listError: "",
-    itemError: "",
+    isFetchingCity: false,
+    fetchingCityError: "",
   },
   reducers: {
-    removeCity: (state, action) => {
+    removeFavorite: (state, action) => {
       const id = action.payload
-      state.list = state.list.filter((item) => item.id !== id)
-      if (state.favoritesIds.includes(id)) {
-        state.favoritesIds = state.favoritesIds.filter((fid) => fid !== id)
-      }
+      state.favorites = state.favorites.filter((city) => city.id !== id)
+    },
+    removeSearchResult: (state, action) => {
+      const id = action.payload
+      state.searchResults = state.searchResults.filter((city) => city.id !== id)
     },
     toggleFavorite: (state, action) => {
       const id = action.payload
-      if (state.favoritesIds.includes(id)) {
-        state.favoritesIds = state.favoritesIds.filter((fid) => fid !== id)
+      if (state.favorites.find((city) => city.id === id)) {
+        state.favorites = state.favorites.filter((city) => city.id !== id)
       } else {
-        state.favoritesIds.push(id)
+        const city = state.searchResults.find((c) => c.id === id)
+        state.favorites.push(city)
       }
     },
   },
   extraReducers: {
     [fetchList.pending]: (state) => {
-      state.isFetchingList = true
-      state.listError = ""
-      state.list = state.list.filter((item) =>
-        state.favoritesIds.includes(item.id)
-      )
+      state.isFetchingSearchResults = true
+      state.searchResultsError = ""
+      state.searchResults = []
     },
     [fetchList.fulfilled]: (state, action) => {
-      state.isFetchingList = false
-      const favorites = state.list.filter((item) =>
-        state.favoritesIds.includes(item.id)
-      )
-      let results = action.payload.filter(
-        (r) => !state.favoritesIds.includes(r.id) // if a result's id is in favoriteIds, it's already in state.list as well
-      )
-      state.list = results.concat(favorites)
+      state.isFetchingSearchResults = false
+      state.searchResults = action.payload
     },
     [fetchList.rejected]: (state, action) => {
-      state.isFetchingList = false
-      state.listError = action.error.message
+      state.isFetchingSearchResults = false
+      state.searchResultsError = action.error.message
     },
     [fetchItem.pending]: (state, action) => {
-      state.isFetchingItem = true
-      state.itemError = ""
+      state.isFetchingCity = true
+      state.fetchingCityError = ""
     },
     [fetchItem.fulfilled]: (state, action) => {
-      state.isFetchingItem = false
+      state.isFetchingCity = false
       state.cityDetails = action.payload
     },
     [fetchItem.rejected]: (state, action) => {
-      state.isFetchingItem = false
-      state.itemError = action.error.message
+      state.isFetchingCity = false
+      state.fetchingCityError = action.error.message
     },
   },
 })
 
-export const { toggleFavorite, removeCity } = citiesSlice.actions
+export const {
+  toggleFavorite,
+  removeSearchResult,
+  removeFavorite,
+} = citiesSlice.actions
 
 export default citiesSlice.reducer
-
-const selectList = (state) => state.cities.list
-const selectFavoritesIds = (state) => state.cities.favoritesIds
-
-export const selectFavorites = createSelector(
-  [selectList, selectFavoritesIds],
-  (list, favoriteIds) =>
-    list
-      .filter((city) => favoriteIds.includes(city.id))
-      .sort(sortCitiesAlphabetically)
-)
-
-export const selectNonFavorites = createSelector(
-  [selectList, selectFavoritesIds],
-  (list, favoriteIds) =>
-    list
-      .filter((city) => !favoriteIds.includes(city.id))
-      .sort(sortCitiesAlphabetically)
-)
-
-function sortCitiesAlphabetically(a, b) {
-  if (a.name < b.name) {
-    return -1
-  }
-  if (a.name > b.name) {
-    return 1
-  }
-  return 0
-}

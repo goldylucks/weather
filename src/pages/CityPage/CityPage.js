@@ -11,10 +11,12 @@ import Spinner from "../../components/Spinner"
 
 const CityPage = ({ cityId }) => {
   const dispatch = useDispatch()
-  const { isFetchingItem, itemError } = useSelector((state) => state.cities)
+  const { isFetchingCity, fetchingCityError } = useSelector(
+    (state) => state.cities
+  )
   const city = useSelector(
     (state) =>
-      state.cities.list.find((city) => city.id === cityId) ||
+      state.cities.searchResults.find((city) => city.id === cityId) ||
       // if city is not in list, check if it's in city details
       // this happens when opening a direct link to a city
       (state.cities.cityDetails.name && state.cities.cityDetails)
@@ -26,11 +28,11 @@ const CityPage = ({ cityId }) => {
     }
   }, [dispatch, cityId, city])
 
-  if (itemError) {
-    return <BackToList>{itemError}</BackToList>
+  if (fetchingCityError) {
+    return <BackToList>{fetchingCityError}</BackToList>
   }
 
-  if (isFetchingItem || !city) {
+  if (isFetchingCity || !city) {
     return <Spinner />
   }
 
