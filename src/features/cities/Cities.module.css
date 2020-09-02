@@ -10,12 +10,24 @@
 }
 
 .city {
+  position: relative;
   animation: enter-city 0.6s ease-in;
-  display: flex;
+  /* display: flex;
   justify-content: flex-start;
-  align-items: center;
-  padding-top: 7px;
-  padding-bottom: 7px;
+  align-items: center; */
+  /* padding-top: 7px;
+  padding-bottom: 7px; */
+  padding: 16px;
+  box-shadow: 0px 2px 1px -1px rgba(0, 0, 0, 0.2),
+    0px 1px 1px 0px rgba(0, 0, 0, 0.14), 0px 1px 3px 0px rgba(0, 0, 0, 0.12);
+  border-radius: 4px;
+  width: 48%;
+  float: left;
+  margin-bottom: 20px;
+}
+
+.city:nth-child(2n-1) {
+  margin-right: 4%;
 }
 
 @media screen and (max-width: 500px) {

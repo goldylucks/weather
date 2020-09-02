@@ -29,33 +29,43 @@ const Cities = ({ cities, title, isFavorites }) => {
     navigate(`/city/${cityId}`)
   }
 
-  const renderCity = (city) => (
-    <div key={city.id} className={styles.city}>
-      <span>
-        <button className="button-link" onClick={() => handleClick(city.id)}>
-          {city.name}
-        </button>
-        <span className={styles.temperature}>{city.current.temperature}°</span>
-      </span>
-      <div className={cx(styles.actions, { [styles["is-mobile"]]: IS_MOBILE })}>
-        <FontAwesomeIcon
-          onClick={() => dispatch(toggleFavorite(city.id))}
-          icon={faHeart}
-          style={{ color: isCityInFavorites(city.id) ? "#f7002b" : "inherit" }}
-        />
-        <FontAwesomeIcon
-          onClick={() =>
-            dispatch(
-              isFavorites
-                ? removeFavorite(city.id)
-                : removeSearchResult(city.id)
-            )
-          }
-          icon={faTrashAlt}
-        />
+  const renderCity = (city) => {
+    const [name, ...region] = city.name.split(",")
+    return (
+      <div key={city.id} className={styles.city}>
+        <div>
+          <button className="button-link" onClick={() => handleClick(city.id)}>
+            <h3>{name}</h3>
+          </button>
+          <span className={styles.temperature}>
+            {city.current.temperature}°
+          </span>
+        </div>
+        <small>{region.join(", ")}</small>
+        <div
+          className={cx(styles.actions, { [styles["is-mobile"]]: IS_MOBILE })}
+        >
+          <FontAwesomeIcon
+            onClick={() => dispatch(toggleFavorite(city.id))}
+            icon={faHeart}
+            style={{
+              color: isCityInFavorites(city.id) ? "#f7002b" : "inherit",
+            }}
+          />
+          <FontAwesomeIcon
+            onClick={() =>
+              dispatch(
+                isFavorites
+                  ? removeFavorite(city.id)
+                  : removeSearchResult(city.id)
+              )
+            }
+            icon={faTrashAlt}
+          />
+        </div>
       </div>
-    </div>
-  )
+    )
+  }
 
   if (isFavorites && cities.length === 0) {
     return null
@@ -63,8 +73,9 @@ const Cities = ({ cities, title, isFavorites }) => {
 
   return (
     <div>
-      <h3 className={styles.title}>{title}</h3>
-      {sortBy(cities, ["name"]).map(renderCity)}
+      <h1 className={styles.title}>{title}</h1>
+      <div>{sortBy(cities, ["name"]).map(renderCity)}</div>
+      <div style={{ clear: "both" }} />
     </div>
   )
 }
