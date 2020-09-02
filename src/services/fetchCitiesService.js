@@ -27,7 +27,7 @@ const fetchListService = (function () {
   const promisifiedGetGooglePlaceDetails = (googlePlaceId) =>
     new Promise((resolve) => {
       getGooglePlacesService().getDetails(
-        { placeId: googlePlaceId },
+        { placeId: googlePlaceId, fields: ["formatted_address", "geometry"] },
         (placeResult) => {
           resolve(placeResult)
         }
