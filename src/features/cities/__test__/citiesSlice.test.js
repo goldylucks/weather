@@ -1,122 +1,80 @@
 import citiesReducer, {
   toggleFavorite,
-  removeCity,
-  fetchList,
-  selectFavorites,
-  selectNonFavorites,
+  removeFavorite,
+  fetchSearchResults,
 } from "../citiesSlice"
 
 describe("citiesReducer", () => {
-  describe("removeCity", () => {
-    it("should remove city from list and favoriteIds", () => {
+  describe("removeFavorite", () => {
+    it("should remove city from favorites", () => {
       // given
       const id = 1
       const state = {
-        list: [{ id }],
-        favoritesIds: [id],
+        favorites: [{ id }],
       }
       // when
-      const result = citiesReducer(state, removeCity(id))
+      const result = citiesReducer(state, removeFavorite(id))
       // then
-      expect(result).toEqual({ list: [], favoritesIds: [] })
+      expect(result).toEqual({ favorites: [] })
     })
   })
   describe("toggleFavorite", () => {
-    it("should add id to favoriteIds", () => {
+    it("should add city to favorites", () => {
       // given
       const id = 1
+      const city = { id }
       const state = {
-        favoritesIds: [],
+        favorites: [],
       }
       // when
-      const result = citiesReducer(state, toggleFavorite(id))
+      const result = citiesReducer(state, toggleFavorite(city))
       // then
-      expect(result).toEqual({ favoritesIds: [id] })
+      expect(result).toEqual({ favorites: [city] })
     })
-    it("should remove id from favoriteIds", () => {
+    it("should remove city from favorites", () => {
       // given
       const id = 1
+      const city = { id }
       const state = {
-        favoritesIds: [id],
+        favorites: [city],
       }
       // when
-      const result = citiesReducer(state, toggleFavorite(id))
+      const result = citiesReducer(state, toggleFavorite(city))
       // then
-      expect(result).toEqual({ favoritesIds: [] })
+      expect(result).toEqual({ favorites: [] })
     })
   })
-  describe("fetchList", () => {
-    it(".pending -> should remove non favorites cities from list and set pending state", () => {
+  describe("fetchSearchResults", () => {
+    it(".pending -> should remove previous results and set pending state", () => {
       // given
-      const id = 1
-      const idToRemove = 2
       const state = {
-        list: [{ id }, { id: idToRemove }],
-        favoritesIds: [id],
+        searchResults: [{}, {}],
       }
       // when
-      const result = citiesReducer(state, { type: fetchList.pending })
+      const result = citiesReducer(state, { type: fetchSearchResults.pending })
       // then
       expect(result).toEqual({
-        isFetchingList: true,
-        listError: "",
-        list: [{ id }],
-        favoritesIds: [id],
+        isFetchingSearchResults: true,
+        searchResultsError: "",
+        searchResults: [],
       })
     })
-    it(".fulfilled -> should add results to the list, except for favorites ones", () => {
+    it(".fulfilled -> should set results", () => {
       // given
       const id = 1
-      const idToAdd = 2
       const state = {
-        list: [{ id }],
-        favoritesIds: [id],
+        searchResults: [{ id }],
       }
       // when
       const result = citiesReducer(state, {
-        type: fetchList.fulfilled,
-        payload: [{ id }, { id: idToAdd }],
+        type: fetchSearchResults.fulfilled,
+        payload: [{ id }],
       })
       // then
       expect(result).toEqual({
-        isFetchingList: false,
-        list: [{ id: idToAdd }, { id }],
-        favoritesIds: [id],
+        isFetchingSearchResults: false,
+        searchResults: [{ id }],
       })
-    })
-  })
-  describe("selectFavorites", () => {
-    it("should select only favorites", () => {
-      // given
-      const id = 1
-      const nonFavId = 2
-      const state = {
-        cities: {
-          list: [{ id }, { id: nonFavId }],
-          favoritesIds: [id],
-        },
-      }
-      // when
-      const result = selectFavorites(state)
-      // then
-      expect(result).toEqual([{ id }])
-    })
-  })
-  describe("selectNonFavorites", () => {
-    it("should select only favorites", () => {
-      // given
-      const id = 1
-      const nonFavId = 2
-      const state = {
-        cities: {
-          list: [{ id }, { id: nonFavId }],
-          favoritesIds: [id],
-        },
-      }
-      // when
-      const result = selectNonFavorites(state)
-      // then
-      expect(result).toEqual([{ id: nonFavId }])
     })
   })
 })

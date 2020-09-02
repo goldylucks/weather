@@ -7,7 +7,7 @@ import UserLocation from "../userLocation/UserLocation"
 import Container from "../../components/Container"
 import styles from "./SearchTopBar.module.css"
 import { setQuery, setIsInnerPagesSearchModalOpen } from "./searchSlice"
-import { fetchList } from "../cities/citiesSlice"
+import { fetchSearchResults } from "../cities/citiesSlice"
 import useDebounce from "../../hooks/useDebounce"
 import useComponentWillMount from "../../hooks/useComponentWillMount"
 
@@ -16,11 +16,11 @@ const SearchTopBar = () => {
   const { query } = useSelector((state) => state.search)
   const dispatch = useDispatch()
   const debouncedFetchList = useDebounce(() => {
-    dispatch(fetchList(query))
+    dispatch(fetchSearchResults(query))
   }, 150)
   useComponentWillMount(() => {
     if (isOnline) {
-      dispatch(fetchList(query))
+      dispatch(fetchSearchResults(query))
     }
   })
 

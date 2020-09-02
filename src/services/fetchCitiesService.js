@@ -1,6 +1,6 @@
 import largestCitiesByPopulation from "../features/cities/largestCitiesByPopulation.json"
 
-const fetchListService = (function () {
+const fetchCitiesService = (function () {
   const API_KEY = "b46aae739e2962e88de88a2a425d1501"
   let googleAutocompleteService
   let googlePlacesService
@@ -49,7 +49,7 @@ const fetchListService = (function () {
       )
     })
 
-  const fetchList = async (query) => {
+  const fetchSearchResults = async (query) => {
     const googlePlacesPredictions = await promisifiedGetGooglePlacesPredictions(
       { query }
     )
@@ -114,7 +114,12 @@ const fetchListService = (function () {
     }
   }
 
-  return { fetchList, fetchItem, fetchDefaultList, fetchUserLocationItem }
+  return {
+    fetchSearchResults,
+    fetchItem,
+    fetchDefaultList,
+    fetchUserLocationItem,
+  }
 })()
 
-export default fetchListService
+export default fetchCitiesService

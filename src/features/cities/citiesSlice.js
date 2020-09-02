@@ -2,19 +2,22 @@ import { createSlice, createAsyncThunk } from "@reduxjs/toolkit"
 
 import fetchCitiesService from "../../services/fetchCitiesService"
 
-export const fetchList = createAsyncThunk("cities/fetchList", async (query) => {
-  const result = query
-    ? await fetchCitiesService.fetchList(query)
-    : await fetchCitiesService.fetchDefaultList()
+export const fetchSearchResults = createAsyncThunk(
+  "cities/fetchSearchResults",
+  async (query) => {
+    const result = query
+      ? await fetchCitiesService.fetchSearchResults(query)
+      : await fetchCitiesService.fetchDefaultList()
 
-  if (result.some((r) => r.error)) {
-    throw new Error(
-      "There was an error processing your request, please try again"
-    )
+    if (result.some((r) => r.error)) {
+      throw new Error(
+        "There was an error processing your request, please try again"
+      )
+    }
+
+    return result
   }
-
-  return result
-})
+)
 
 export const fetchItem = createAsyncThunk("cities/fetchItem", async (id) => {
   const result = await fetchCitiesService.fetchItem(id)
@@ -56,16 +59,16 @@ const citiesSlice = createSlice({
     },
   },
   extraReducers: {
-    [fetchList.pending]: (state) => {
+    [fetchSearchResults.pending]: (state) => {
       state.isFetchingSearchResults = true
       state.searchResultsError = ""
       state.searchResults = []
     },
-    [fetchList.fulfilled]: (state, action) => {
+    [fetchSearchResults.fulfilled]: (state, action) => {
       state.isFetchingSearchResults = false
       state.searchResults = action.payload
     },
-    [fetchList.rejected]: (state, action) => {
+    [fetchSearchResults.rejected]: (state, action) => {
       state.isFetchingSearchResults = false
       state.searchResultsError = action.error.message
     },
