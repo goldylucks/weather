@@ -56,7 +56,7 @@ const CityPage = ({ cityId }) => {
         >
           <h1>{name}</h1>
           <FontAwesomeIcon
-            onClick={() => dispatch(toggleFavorite(city.id))}
+            onClick={() => dispatch(toggleFavorite(city))}
             icon={faHeart}
             style={{
               cursor: "pointer",
