@@ -47,11 +47,10 @@ const citiesSlice = createSlice({
       state.searchResults = state.searchResults.filter((city) => city.id !== id)
     },
     toggleFavorite: (state, action) => {
-      const id = action.payload
-      if (state.favorites.find((city) => city.id === id)) {
-        state.favorites = state.favorites.filter((city) => city.id !== id)
+      const city = action.payload
+      if (state.favorites.find((c) => c.id === city.id)) {
+        state.favorites = state.favorites.filter((c) => c.id !== city.id)
       } else {
-        const city = state.searchResults.find((c) => c.id === id)
         state.favorites.push(city)
       }
     },

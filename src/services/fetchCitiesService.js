@@ -34,10 +34,15 @@ const fetchListService = (function () {
       )
     })
 
-  const promisifiedGetGooglePlacesPredictions = (query) =>
+  const promisifiedGetGooglePlacesPredictions = ({ query, lat, lng }) =>
     new Promise((resolve) => {
+      const options = { types: ["(cities)"], input: query }
+      if (lat && lng) {
+        options.location = new window.google.maps.LatLng(lat, lng)
+        options.radius = 1
+      }
       getGoogleAutocompleteService().getPlacePredictions(
-        { types: ["(cities)"], input: query },
+        options,
         (predictions) => {
           resolve(predictions)
         }
@@ -46,7 +51,7 @@ const fetchListService = (function () {
 
   const fetchList = async (query) => {
     const googlePlacesPredictions = await promisifiedGetGooglePlacesPredictions(
-      query
+      { query }
     )
     if (googlePlacesPredictions === null) {
       return []
@@ -91,9 +96,22 @@ const fetchListService = (function () {
   }
 
   const fetchUserLocationItem = async ({ lat, lng }) => {
-    let details = await fetchItemWeatherDetails({ lat, lng })
-    details = await details.json()
-    return details
+    let weatherDetails = await fetchItemWeatherDetails({ lat, lng })
+    weatherDetails = await weatherDetails.json()
+    const predictions = await promisifiedGetGooglePlacesPredictions({
+      lat,
+      lng,
+      query: weatherDetails.location.name,
+    })
+    const googlePlaceId = predictions[0].place_id
+    const googlePlaceDetails = await promisifiedGetGooglePlaceDetails(
+      googlePlaceId
+    )
+    return {
+      ...weatherDetails,
+      name: googlePlaceDetails.formatted_address,
+      id: googlePlaceId,
+    }
   }
 
   return { fetchList, fetchItem, fetchDefaultList, fetchUserLocationItem }

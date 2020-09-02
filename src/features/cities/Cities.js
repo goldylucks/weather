@@ -46,7 +46,7 @@ const Cities = ({ cities, title, isFavorites }) => {
           className={cx(styles.actions, { [styles["is-mobile"]]: IS_MOBILE })}
         >
           <FontAwesomeIcon
-            onClick={() => dispatch(toggleFavorite(city.id))}
+            onClick={() => dispatch(toggleFavorite(city))}
             icon={faHeart}
             style={{
               color: isCityInFavorites(city.id) ? "#f7002b" : "inherit",

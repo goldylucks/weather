@@ -1,5 +1,4 @@
 import { createSlice, createAsyncThunk } from "@reduxjs/toolkit"
-import { v4 as uuidv4 } from "uuid"
 import fetchCitiesService from "../../services/fetchCitiesService"
 
 export const fetchWeather = createAsyncThunk(
@@ -18,7 +17,7 @@ export const fetchWeather = createAsyncThunk(
 const userLocationSlice = createSlice({
   name: "userLocation",
   initialState: {
-    id: uuidv4(),
+    id: "",
     isFetching: false,
     current: {},
     name: "",
@@ -39,10 +38,11 @@ const userLocationSlice = createSlice({
       state.error = ""
     },
     [fetchWeather.fulfilled]: (state, action) => {
-      const { current, location } = action.payload
+      const { current, name, id } = action.payload
       state.isFetching = false
       state.current = current
-      state.name = `${location.name}, ${location.country}`
+      state.name = name
+      state.id = id
     },
     [fetchWeather.rejected]: (state, action) => {
       state.isFetching = false
