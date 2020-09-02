@@ -41,19 +41,20 @@ const CityPage = ({ cityId }) => {
     return <Spinner />
   }
 
+  const [name, ...region] = city.name.split(",")
+
   return (
     <div className="page">
       <BackToList />
       <Container>
         <div
           style={{
-            marginBottom: 10,
             display: "flex",
             justifyContent: "space-between",
             alignItems: "center",
           }}
         >
-          <h1>{city.name}</h1>
+          <h1>{name}</h1>
           <FontAwesomeIcon
             onClick={() => dispatch(toggleFavorite(city.id))}
             icon={faHeart}
@@ -65,8 +66,10 @@ const CityPage = ({ cityId }) => {
             }}
           />
         </div>
+        <span>{region.join(", ")}</span>
+        <h3 style={{ marginTop: 30, marginBottom: 10 }}>Weather Details</h3>
         <WeatherDetails {...city.current} />
-        <h3 style={{ marginTop: 20, marginBottom: 10 }}>Notes</h3>
+        <h3 style={{ marginTop: 30, marginBottom: 10 }}>Notes</h3>
         <div style={{ marginBottom: 20 }}>
           <CityNotes listId={cityId} />
         </div>

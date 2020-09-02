@@ -18,7 +18,7 @@ const AddCityNote = ({ listId }) => {
   }
 
   return (
-    <div>
+    <div style={{ paddingBottom: 20 }}>
       <textarea
         onChange={handleChange}
         value={text}

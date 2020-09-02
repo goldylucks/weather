@@ -1,6 +1,8 @@
 import React from "react"
 import PropTypes from "prop-types"
 
+import styles from "./WeatherDetails.module.css"
+
 const WeatherDetails = ({
   temperature,
   weather_descriptions,
@@ -11,12 +13,11 @@ const WeatherDetails = ({
   feelslike,
 }) => (
   <div>
-    <p>
-      {weather_descriptions.join(", ")} {temperature}°
-    </p>
-    <p>Feels like {feelslike}°</p>
-    <p>Humidity {humidity}</p>
-    <p>
+    <p className={styles.item}>{weather_descriptions.join(", ")}</p>
+    <p className={styles.item}>Temperature {temperature}°</p>
+    <p className={styles.item}>Feels like {feelslike}°</p>
+    <p className={styles.item}>Humidity {humidity}%</p>
+    <p className={styles.item}>
       Wind {wind_speed}km/h, {wind_degree}°, {wind_dir}
     </p>
   </div>

@@ -66,19 +66,20 @@ const UserLocationPage = () => {
     )
   }
 
+  const [cityName, ...region] = name.split(",")
+
   const contents = (
     <div className="page">
       <BackToList />
       <Container>
         <div
           style={{
-            marginBottom: 10,
             display: "flex",
             justifyContent: "space-between",
             alignItems: "center",
           }}
         >
-          <h1>{name}</h1>
+          <h1>{cityName}</h1>
           <FontAwesomeIcon
             onClick={() =>
               dispatch(
@@ -98,8 +99,10 @@ const UserLocationPage = () => {
             }}
           />
         </div>
+        <span>{region.join(", ")}</span>
+        <h3 style={{ marginTop: 30, marginBottom: 10 }}>Weather Details</h3>
         <WeatherDetails {...current} />
-        <h3 style={{ marginTop: 20, marginBottom: 10 }}>Notes</h3>
+        <h3 style={{ marginTop: 30, marginBottom: 10 }}>Notes</h3>
         <div style={{ marginBottom: 20 }}>
           <CityNotes listId={id} />
         </div>
