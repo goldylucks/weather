@@ -17,7 +17,7 @@ import { navigate } from "@reach/router"
 import { setIsInnerPagesSearchModalOpen } from "../search/searchSlice"
 import useIsCityInFavorites from "../../hooks/useIsCityInFavorites"
 
-const Cities = ({ cities, title, isFavorites }) => {
+const Cities = ({ cities, title, isFavorites, isInModal }) => {
   const isCityInFavorites = useIsCityInFavorites()
   const dispatch = useDispatch()
   const { isInnerPagesSearchModalOpen } = useSelector((state) => state.search)
@@ -43,7 +43,10 @@ const Cities = ({ cities, title, isFavorites }) => {
         </div>
         <small>{region.join(", ")}</small>
         <div
-          className={cx(styles.actions, { [styles["is-mobile"]]: IS_MOBILE })}
+          className={cx(styles.actions, {
+            [styles.isInModal]: isInModal,
+            [styles["is-mobile"]]: IS_MOBILE,
+          })}
         >
           <FontAwesomeIcon
             onClick={() => dispatch(toggleFavorite(city))}
@@ -83,6 +86,7 @@ const Cities = ({ cities, title, isFavorites }) => {
 Cities.propTypes = {
   title: PropTypes.string.isRequired,
   isFavorites: PropTypes.bool,
+  isInModal: PropTypes.bool,
   cities: PropTypes.arrayOf(
     PropTypes.shape({
       id: PropTypes.string.isRequired,

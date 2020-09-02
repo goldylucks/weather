@@ -49,9 +49,10 @@ const SearchResultsModalForInnerPages = () => {
             className={styles.close}
           />
         </div>
-        <Cities title="Favorites" isFavorites cities={favorites} />
+        <Cities isInModal title="Favorites" isFavorites cities={favorites} />
         {favorites.length > 0 && <hr style={{ margin: 30 }} />}
         <Cities
+          isInModal
           title={query ? "Search Results" : "Largest cities by population"}
           cities={searchResults}
         />
