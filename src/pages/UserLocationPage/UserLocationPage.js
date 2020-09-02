@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from "react"
 
+import getCityFromCoords from "./getCityFromCoords"
 import useIsOnline from "../../hooks/useIsOnline"
 import Container from "../../components/Container"
 import WeatherDetails from "../../components/WeatherDetails"
@@ -36,6 +37,7 @@ const UserLocationPage = () => {
     navigator.geolocation.getCurrentPosition(
       (position) => {
         const { latitude, longitude } = position.coords
+        // getCityFromCoords(latitude, longitude)
         dispatch(fetchWeather({ lat: latitude, lng: longitude }))
         dispatch(setCoords({ lat: latitude, lng: longitude }))
         setIsInitialRender(false)
