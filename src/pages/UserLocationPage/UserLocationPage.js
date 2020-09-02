@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react"
 
-import getCityFromCoords from "./getCityFromCoords"
+// import getCityFromCoords from "./getCityFromCoords"
 import useIsOnline from "../../hooks/useIsOnline"
 import Container from "../../components/Container"
 import WeatherDetails from "../../components/WeatherDetails"

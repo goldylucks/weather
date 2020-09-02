@@ -33,7 +33,7 @@ const Cities = ({ cities, title, isFavorites }) => {
     const [name, ...region] = city.name.split(",")
     return (
       <div key={city.id} className={styles.city}>
-        <div>
+        <div style={{ display: "flex", justifyContent: "space-between" }}>
           <button className="button-link" onClick={() => handleClick(city.id)}>
             <h3>{name}</h3>
           </button>
