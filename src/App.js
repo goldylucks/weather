@@ -15,7 +15,7 @@ import useIsOnline from "./hooks/useIsOnline"
 function App() {
   const isOnline = useIsOnline()
   return (
-    <div className={cx("app-container", { "is-offline": !isOnline })}>
+    <div className={cx("app-container", { isOffline: !isOnline })}>
       <SearchTopBar />
       <Location>
         {({ location }) => (

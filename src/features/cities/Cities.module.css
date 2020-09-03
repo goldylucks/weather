@@ -51,7 +51,7 @@
   background: rgba(200, 200, 200, 0.95);
 }
 
-.actions:not(.is-mobile) {
+.actions:not(.isMobile) {
   transition: 0.6s opacity;
   opacity: 0;
   top: 16px;

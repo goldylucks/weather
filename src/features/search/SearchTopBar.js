@@ -61,7 +61,7 @@ const SearchTopBar = () => {
               readOnly
               value=""
               placeholder="Search disabled offline"
-              className={cx(styles.input, styles["is-offline"])}
+              className={cx(styles.input, styles.isOffline)}
             />
           )}
 

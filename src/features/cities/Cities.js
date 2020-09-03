@@ -45,7 +45,7 @@ const Cities = ({ cities, title, isFavorites, isInModal }) => {
         <div
           className={cx(styles.actions, {
             [styles.isInModal]: isInModal,
-            [styles["is-mobile"]]: IS_MOBILE,
+            [styles.isMobile]: IS_MOBILE,
           })}
         >
           <FontAwesomeIcon

@@ -49,9 +49,7 @@ const CityNote = ({ listId, id, text, isEditing, editingText }) => {
   const note = (
     <li className={styles.cityNote}>
       <p>{text}</p>
-      <div
-        className={cx(styles.noteActions, { [styles["is-mobile"]]: IS_MOBILE })}
-      >
+      <div className={cx(styles.noteActions, { [styles.isMobile]: IS_MOBILE })}>
         <FontAwesomeIcon
           onClick={handleStartEditing}
           icon={faEdit}

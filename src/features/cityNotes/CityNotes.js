@@ -6,11 +6,7 @@ import { TransitionGroup, CSSTransition } from "react-transition-group"
 import CityNote from "./CityNote"
 
 const CityNotes = ({ listId }) => {
-  const notes = useSelector((state) => state.cityNotes[listId])
-
-  if (!notes) {
-    return null
-  }
+  const notes = useSelector((state) => state.cityNotes[listId]) || {}
 
   return (
     <TransitionGroup>
