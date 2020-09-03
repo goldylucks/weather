@@ -33,3 +33,20 @@
   transition: height 0.6s;
   overflow: hidden;
 }
+
+.enter {
+  transform: translateY(45px);
+}
+
+.enter.enterActive {
+  transform: translateY(0px);
+  transition: transform 150ms ease-in;
+}
+
+.exit {
+  transition: height 250ms ease-in;
+}
+
+.exit.exitActive {
+  height: 0 !important;
+}

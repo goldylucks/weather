@@ -2,7 +2,7 @@ import React from "react"
 import { useSelector } from "react-redux"
 import PropTypes from "prop-types"
 import { TransitionGroup, CSSTransition } from "react-transition-group"
-
+import styles from "./CityNotes.module.css"
 import CityNote from "./CityNote"
 
 const CityNotes = ({ listId }) => {
@@ -11,11 +11,7 @@ const CityNotes = ({ listId }) => {
   return (
     <TransitionGroup>
       {Object.values(notes).map((note) => (
-        <CSSTransition
-          timeout={250}
-          classNames="city-notes-transitions"
-          key={note.id}
-        >
+        <CSSTransition timeout={250} classNames={{ ...styles }} key={note.id}>
           <CityNote listId={listId} {...note} />
         </CSSTransition>
       ))}

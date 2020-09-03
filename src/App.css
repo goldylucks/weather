@@ -120,20 +120,3 @@ a {
   opacity: 1;
   transition: all 150ms ease-in;
 }
-
-.city-notes-transitions-enter {
-  transform: translateY(45px);
-}
-
-.city-notes-transitions-enter.city-notes-transitions-enter-active {
-  transform: translateY(0px);
-  transition: transform 150ms ease-in;
-}
-
-.city-notes-transitions-exit {
-  transition: height 250ms ease-in;
-}
-
-.city-notes-transitions-exit.city-notes-transitions-exit-active {
-  height: 0 !important;
-}
