@@ -28,8 +28,12 @@ const fetchCitiesService = (function () {
     new Promise((resolve) => {
       getGooglePlacesService().getDetails(
         { placeId: googlePlaceId, fields: ["formatted_address", "geometry"] },
-        (placeResult) => {
-          resolve(placeResult)
+        (placeResult, status) => {
+          if (status === window.google.maps.places.PlacesServiceStatus.OK) {
+            resolve(placeResult)
+          } else {
+            console.log(status)
+          }
         }
       )
     })
