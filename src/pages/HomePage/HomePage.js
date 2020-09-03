@@ -13,7 +13,6 @@ const HomePage = () => {
     searchResultsError,
   } = useSelector((state) => state.cities)
   const { query } = useSelector((state) => state.search)
-
   let inner
   if (isFetchingSearchResults) {
     inner = <Spinner />
@@ -29,6 +28,7 @@ const HomePage = () => {
         <Cities title="Favorites" isFavorites cities={favorites} />
         {favorites.length > 0 && <hr style={{ margin: 30 }} />}
         <Cities
+          isFetching={isFetchingSearchResults}
           title={query ? "Search Results" : "Largest cities by population"}
           cities={searchResults}
         />

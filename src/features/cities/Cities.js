@@ -4,6 +4,7 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome"
 import PropTypes from "prop-types"
 import cx from "classnames"
 import sortBy from "lodash.sortby"
+import { TransitionGroup, CSSTransition } from "react-transition-group"
 
 import { IS_MOBILE } from "../../constants/mobile"
 import {
@@ -17,7 +18,7 @@ import { navigate } from "@reach/router"
 import { setIsInnerPagesSearchModalOpen } from "../search/searchSlice"
 import useIsCityInFavorites from "../../hooks/useIsCityInFavorites"
 
-const Cities = ({ cities, title, isFavorites, isInModal }) => {
+const Cities = ({ cities, title, isFavorites, isInModal, isFetching }) => {
   const isCityInFavorites = useIsCityInFavorites()
   const dispatch = useDispatch()
   const { isInnerPagesSearchModalOpen } = useSelector((state) => state.search)
@@ -29,44 +30,52 @@ const Cities = ({ cities, title, isFavorites, isInModal }) => {
     navigate(`/city/${cityId}`)
   }
 
-  const renderCity = (city) => {
+  const renderCity = (city, idx) => {
     const [name, ...region] = city.name.split(",")
     return (
-      <div key={city.id} className={styles.city}>
-        <div style={{ display: "flex", justifyContent: "space-between" }}>
-          <button className="button-link" onClick={() => handleClick(city.id)}>
-            <h3>{name}</h3>
-          </button>
-          <span className={styles.temperature}>
-            {city.current.temperature}°
-          </span>
-        </div>
-        <small>{region.join(", ")}</small>
+      <CSSTransition timeout={250} classNames={{ ...styles }} key={city.id}>
         <div
-          className={cx(styles.actions, {
-            [styles.isInModal]: isInModal,
-            [styles.isMobile]: IS_MOBILE,
-          })}
+          className={styles.city}
+          style={{ transitionDelay: `${idx * 50}ms` }}
         >
-          <FontAwesomeIcon
-            onClick={() => dispatch(toggleFavorite(city))}
-            icon={faHeart}
-            style={{
-              color: isCityInFavorites(city.id) ? "#f7002b" : "inherit",
-            }}
-          />
-          <FontAwesomeIcon
-            onClick={() =>
-              dispatch(
-                isFavorites
-                  ? removeFavorite(city.id)
-                  : removeSearchResult(city.id)
-              )
-            }
-            icon={faTrashAlt}
-          />
+          <div style={{ display: "flex", justifyContent: "space-between" }}>
+            <button
+              className="button-link"
+              onClick={() => handleClick(city.id)}
+            >
+              <h3>{name}</h3>
+            </button>
+            <span className={styles.temperature}>
+              {city.current.temperature}°
+            </span>
+          </div>
+          <small>{region.join(", ")}</small>
+          <div
+            className={cx(styles.actions, {
+              [styles.isInModal]: isInModal,
+              [styles.isMobile]: IS_MOBILE,
+            })}
+          >
+            <FontAwesomeIcon
+              onClick={() => dispatch(toggleFavorite(city))}
+              icon={faHeart}
+              style={{
+                color: isCityInFavorites(city.id) ? "#f7002b" : "inherit",
+              }}
+            />
+            <FontAwesomeIcon
+              onClick={() =>
+                dispatch(
+                  isFavorites
+                    ? removeFavorite(city.id)
+                    : removeSearchResult(city.id)
+                )
+              }
+              icon={faTrashAlt}
+            />
+          </div>
         </div>
-      </div>
+      </CSSTransition>
     )
   }
 
@@ -77,7 +86,11 @@ const Cities = ({ cities, title, isFavorites, isInModal }) => {
   return (
     <div>
       <h1 className={styles.title}>{title}</h1>
-      <div>{sortBy(cities, ["name"]).map(renderCity)}</div>
+      <div className={cx({ [styles.isFetching]: isFetching })}>
+        <TransitionGroup className={styles.cities}>
+          {sortBy(cities, ["name"]).map(renderCity)}
+        </TransitionGroup>
+      </div>
       <div style={{ clear: "both" }} />
     </div>
   )
